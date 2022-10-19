@@ -1,12 +1,6 @@
 import { GlobalStyle } from "./GlobalStyle";
-import { HeaderWrapper } from "./Header";
+import { HeaderWrapper } from "./Header"
+import { TimelineWrapper } from "./Timeline";
+import { PostWrapper } from "./Post";
 
-export { GlobalStyle, HeaderWrapper }
-
-/*
-font-family: 'Lato', sans-serif;
-
-font-family: 'Oswald', sans-serif;
-
-font-family: 'Passion One', cursive;
-*/
+export { GlobalStyle, HeaderWrapper, PostWrapper, TimelineWrapper }

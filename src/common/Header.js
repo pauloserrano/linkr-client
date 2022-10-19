@@ -14,7 +14,6 @@ const Header = () => {
             </button>
             <img src={user.pictureUrl} alt="ae" />
         </div>
-            
     </Wrapper>
   )
 }
