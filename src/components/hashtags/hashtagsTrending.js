@@ -1,9 +1,28 @@
 import styled from "styled-components";
+import {useNavigate} from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export default function hashtagTrending(){
+export default function HashtagTrending(){
+    
+    const navigate = useNavigate()
 
-    const hashtagList = ["javascript", "react", "react-native", "material", "web-dev", "mobile", "css", "html", "node", "sql"]
+    
+    const [hashtagList, setHashtagList] = useState([])
+    
+    useEffect(() =>{
+      
+        const promisse = axios.get("http://localhost:4000/ranking/hashtag/testes")
+        promisse.then( req => setHashtagList( req.data))
+        setHashtagList(promisse)
+   
+    }, [])
 
+    function clicked (nome){
+        console.log(nome)
+        navigate(`/hashtag/${nome}`)
+    }
+    
     return(
 
         <Container>
@@ -13,9 +32,14 @@ export default function hashtagTrending(){
 
             <HashtagContainer>
                 {
-                    hashtagList.map(e => { return(
-                        <p># {e}</p>
-                    )})
+                    (hashtagList.length >= 0) ? (
+
+                        hashtagList.map(e => { return(
+                            <p onClick={() => clicked(e)} key={e}># {e}</p>
+                        )})
+
+                    ):(<p>carregando...</p>)
+                    
                 }
             </HashtagContainer>
         </Container>
@@ -60,5 +84,6 @@ const HashtagContainer = styled.div`
         line-height:23px;
         letter-spacing:0.05em;
         margin-bottom:6px;
+        cursor: pointer;
     }
 `
