@@ -3,5 +3,6 @@ import HeaderWrapper from "./Header"
 import TimelineWrapper from "./Timeline";
 import PostWrapper from "./Post";
 import FeedWrapper from "./Feed"
+import NewPostWrapper from "./NewPost"
 
-export { GlobalStyle, HeaderWrapper, PostWrapper, TimelineWrapper, FeedWrapper }
+export { GlobalStyle, HeaderWrapper, PostWrapper, TimelineWrapper, FeedWrapper, NewPostWrapper }

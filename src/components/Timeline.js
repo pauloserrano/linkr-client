@@ -1,22 +1,42 @@
 import { useEffect, useState } from "react";
-import { TimelineWrapper } from "../styles";
-import { getPosts } from "../services/axios";
+import { TimelineWrapper, NewPostWrapper } from "../styles";
+import { getPosts, setPost } from "../services/axios";
+import useForm from "../hooks/useForm";
 import Header from "../common/Header";
 import Feed from "../common/Feed";
 
 const Timeline = () => {
   const [posts, setPosts] = useState()
   const [error, setError] = useState(false)
+  const [form, handleForm, setForm] = useForm({
+    link: "",
+    description: ""
+  })
 
-  useEffect(() => {
-      getPosts()
-        .then(({ data }) => setPosts(data))
-        .catch(err => {
-          console.error(err)
-          setError(true)
-        })
+  useEffect(() => updatePosts(), [])
 
-  }, [])
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    
+    setPost({ ...form })
+      .then(() => {
+        updatePosts()
+        resetForm()
+      })
+  }
+
+  const updatePosts = () => {
+    getPosts()
+    .then(({ data }) => setPosts(data))
+    .catch(err => {
+      console.error(err)
+      setError(true)
+    })
+  }
+
+  const resetForm = () => {
+    setForm({ link: "", description: "" })
+  }
 
   return (
     <>
@@ -24,10 +44,33 @@ const Timeline = () => {
         <TimelineWrapper>
             <Feed>
               <Feed.Title>timeline</Feed.Title>
-              {!posts && !error && 'Loading'}
-              {posts?.length === 0 && 'No posts yet'}
-              {error && 'An error occured while trying to fetch the posts, please refresh the page'}
-              {posts?.length > 0 && posts.map((post, index) => <Feed.Post key={index} post={post} />)}
+              <NewPostWrapper>
+                <img src="https://picsum.photos/200/200" alt="abc" />
+                <form onSubmit={handleSubmit}>
+                  <h3>What are you going to share today?</h3>
+                  <input 
+                    type="text" 
+                    name="link" 
+                    value={form.link}
+                    onChange={handleForm} 
+                    placeholder="http://..." 
+                  />
+                  <input 
+                    type="text" 
+                    name="description" 
+                    value={form.description}
+                    onChange={handleForm} 
+                    placeholder="Awesome article about #javascript" 
+                  />
+                  <button type="submit">Publish</button>
+                </form>
+              </NewPostWrapper>
+              <Feed.Status loading={posts} error={error} />
+              {posts?.length > 0 && posts.map((post, index) => (
+                <Feed.Post 
+                  key={index} 
+                  post={post} />
+              ))}
             </Feed>
         </TimelineWrapper>
     </>

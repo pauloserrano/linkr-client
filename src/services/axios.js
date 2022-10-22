@@ -16,4 +16,13 @@ const getPosts = async () => {
     return api.get('/timeline')
 }
 
-export { login, signUp, getPosts };
+const setPost = async ({ link, description }) => {
+    return api.post('/post', 
+        { link, description }, 
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+export { login, signUp, getPosts, setPost };

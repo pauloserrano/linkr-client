@@ -1,4 +1,4 @@
-import { FeedWrapper, PostWrapper } from "../styles";
+import { FeedWrapper, PostWrapper, NewPostWrapper } from "../styles";
 
 const Feed = ({ children, ...otherProps }) => {
   return (
@@ -30,5 +30,14 @@ Feed.Post = ({ post: { pictureUrl, name, link, description }, ...otherProps}) =>
   )
 }
 
+Feed.Status = ({ loading, error }) => {
+  return (
+    <>
+      {!loading && !error && 'Loading'}
+      {loading?.length === 0 && 'No posts yet'}
+      {error && 'An error occured while trying to fetch the posts, please refresh the page'}
+    </>
+  )
+}
 
 export default Feed
