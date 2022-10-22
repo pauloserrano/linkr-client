@@ -12,18 +12,20 @@ Feed.Title = ({ children, ...otherProps }) => {
     return (<h2 {...otherProps}>{children}</h2>)
 }
 
-Feed.Post = ({ post: { pictureUrl, name, link, description }, ...otherProps}) => {
+Feed.Post = ({ post, ...otherProps}) => {
+  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
+  
   return (
     <PostWrapper {...otherProps}>
-        <img src={pictureUrl} alt="abc" />
+        <img src={pictureUrl} alt={name} />
         <div className="content">
             <h3>{name}</h3>
-            {description && <p>{description}</p>}
+            {body && <p>{body}</p>}
             <a href={link} target="_blank" rel="noopener noreferrer">
-              <p className="title">Como aplicar o Material UI em um projeto React</p>
-              <p className="description">Hey! I have moved this tutorial to my personal blog. Same content, new location. Sorry about making you click through to another page.</p>
+              <p className="title">{metaTitle}</p>
+              {metaDescription && <p className="description">{metaDescription}</p>}
               <p className="link">{link}</p>
-              <img src={pictureUrl} alt="abc" />
+              <img src={metaImage} alt={metaTitle} />
             </a>
         </div>
     </PostWrapper>

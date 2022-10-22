@@ -7,7 +7,7 @@ const Wrapper = styled.header`
     height: min(70px, 20vh);
     position: relative;
     padding: 0.5rem 1.5rem;
-    margin-bottom: 5rem;
+    margin-bottom: 2.5rem;
     background-color: #151515;
 
     h1{

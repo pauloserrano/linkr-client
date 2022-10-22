@@ -34,6 +34,7 @@ const Wrapper = styled.section`
             padding: 1.5rem 1rem;
             border: 1px solid #4D4D4D;
             border-radius: 15px;
+            color: #CECECE;
 
             .title, .description, .link{
                 width: calc(100% - 170px);
@@ -62,10 +63,13 @@ const Wrapper = styled.section`
             }
     
             img{
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 position: absolute;
                 top: -1px;
                 right: -1px;
-                max-width: 155px;
+                width: 155px;
                 height: calc(100% + 2px);
                 object-fit: cover;
                 border-radius: 0 15px 15px 0;

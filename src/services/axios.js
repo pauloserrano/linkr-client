@@ -16,9 +16,9 @@ const getPosts = async () => {
     return api.get('/timeline')
 }
 
-const setPost = async ({ link, description }) => {
+const setPost = async ({ link, body }) => {
     return api.post('/post', 
-        { link, description }, 
+        { link, body }, 
         { headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
         }}

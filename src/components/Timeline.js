@@ -11,7 +11,7 @@ const Timeline = () => {
   const [isDisabled, setIsDisabled] = useState(false)
   const [form, handleForm, setForm] = useForm({
     link: "",
-    description: ""
+    body: ""
   })
 
   useEffect(() => updatePosts(), [])
@@ -41,7 +41,7 @@ const Timeline = () => {
   }
 
   const resetForm = () => {
-    setForm({ link: "", description: "" })
+    setForm({ link: "", body: "" })
   }
 
   return (
@@ -63,8 +63,8 @@ const Timeline = () => {
                   />
                   <input 
                     type="text" 
-                    name="description" 
-                    value={form.description}
+                    name="body" 
+                    value={form.body}
                     onChange={handleForm} 
                     placeholder="Awesome article about #javascript" 
                   />
