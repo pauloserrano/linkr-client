@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const HeaderWrapper = styled.header`
+const Wrapper = styled.header`
     display: flex;
     align-items: center;
     width: 100%;
@@ -41,4 +41,4 @@ const HeaderWrapper = styled.header`
     }
 `
 
-export { HeaderWrapper }
+export default Wrapper
