@@ -8,6 +8,7 @@ import Feed from "../common/Feed";
 const Timeline = () => {
   const [posts, setPosts] = useState()
   const [error, setError] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false)
   const [form, handleForm, setForm] = useForm({
     link: "",
     description: ""
@@ -15,13 +16,18 @@ const Timeline = () => {
 
   useEffect(() => updatePosts(), [])
 
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    
+    setIsDisabled(true)
     setPost({ ...form })
       .then(() => {
         updatePosts()
         resetForm()
+        setIsDisabled(false)
+      }).catch(() => {
+        alert("Houve um erro ao publicar seu link")
+        setIsDisabled(false)
       })
   }
 
@@ -44,7 +50,7 @@ const Timeline = () => {
         <TimelineWrapper>
             <Feed>
               <Feed.Title>timeline</Feed.Title>
-              <NewPostWrapper>
+              <NewPostWrapper isDisabled={isDisabled}>
                 <img src="https://picsum.photos/200/200" alt="abc" />
                 <form onSubmit={handleSubmit}>
                   <h3>What are you going to share today?</h3>
@@ -62,7 +68,7 @@ const Timeline = () => {
                     onChange={handleForm} 
                     placeholder="Awesome article about #javascript" 
                   />
-                  <button type="submit">Publish</button>
+                  <button type="submit">{ isDisabled ? "Publishing..." : "Publish"}</button>
                 </form>
               </NewPostWrapper>
               <Feed.Status loading={posts} error={error} />

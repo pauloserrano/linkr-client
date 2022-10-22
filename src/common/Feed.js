@@ -1,4 +1,4 @@
-import { FeedWrapper, PostWrapper, NewPostWrapper } from "../styles";
+import { FeedWrapper, PostWrapper } from "../styles";
 
 const Feed = ({ children, ...otherProps }) => {
   return (

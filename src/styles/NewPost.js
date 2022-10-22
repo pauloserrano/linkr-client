@@ -44,7 +44,7 @@ const Wrapper = styled.section`
             padding: 0.5em 1em;
             border: none;
             border-radius: 5px;
-            background-color: #1877F2;
+            background-color: ${props => props.isDisabled ? '#6AA8F9' : '#1877F2'};
             color: #FFF;
         }
     }
