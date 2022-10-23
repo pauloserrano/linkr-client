@@ -12,4 +12,17 @@ const signUp = ({ email, password, name, pictureUrl }) => {
     return api.post('/signup', { email, password, name, pictureUrl });
 };
 
-export { login, signUp };
+const getPosts = async () => {
+    return api.get('/timeline')
+}
+
+const setPost = async ({ link, body }) => {
+    return api.post('/post', 
+        { link, body }, 
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+export { login, signUp, getPosts, setPost };
