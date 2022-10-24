@@ -16,6 +16,10 @@ const getPosts = async () => {
     return api.get('/timeline')
 }
 
+const getLikes = async () => {
+    return {likes:10}
+}
+
 const getHashtagsRanking = async () => {
     return api.get('ranking/hashtag')
 }
@@ -32,4 +36,4 @@ const setPost = async ({ link, body }) => {
     )
 }
 
-export { login, signUp, getPosts, setPost, getHashtagsRanking, getPostsHashtag };
+export { login, signUp, getPosts, setPost, getHashtagsRanking, getPostsHashtag, getLikes };
