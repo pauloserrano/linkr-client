@@ -16,8 +16,16 @@ const getPosts = async () => {
     return api.get('/timeline')
 }
 
-const getLikes = async () => {
-    return {likes:10}
+const getLikes = async (postId) => {
+    return api.get(`/likeamount/${postId}`)
+}
+
+const insertLike = async (postId) => {
+    return api.post(`/like/${postId}`)
+}
+
+const deleteLike = async (postId) => {
+    return api.delete(`/like/${postId}`)
 }
 
 const getHashtagsRanking = async () => {
@@ -36,4 +44,4 @@ const setPost = async ({ link, body }) => {
     )
 }
 
-export { login, signUp, getPosts, setPost, getHashtagsRanking, getPostsHashtag, getLikes };
+export { login, signUp, getPosts, setPost, getHashtagsRanking, getPostsHashtag, getLikes, insertLike, deleteLike};

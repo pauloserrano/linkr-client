@@ -15,13 +15,13 @@ Feed.Title = ({ children, ...otherProps }) => {
 }
 
 Feed.Post = ({ post, ...otherProps}) => {
-  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
+  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage, id } = post
 
   return (
     <PostWrapper {...otherProps}>
         <div> 
           <UserImage src={pictureUrl} alt={name} />
-          <LikeContainer/>
+          <LikeContainer postId={id}/>
         </div>
         <div className="content">
             <h3>{name}</h3>

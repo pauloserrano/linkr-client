@@ -1,36 +1,46 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { getLikes } from "../services/axios";
+import { getLikes, deleteLike, insertLike } from "../services/axios";
 
-export default function LikeContainer (){
+export default function LikeContainer ({postId}){
 
-    const [isLiked, setIsLiked] = useState(false)
-    const [likeAmount, setLikeAmount] = useState(0)
+  const [isLiked, setIsLiked] = useState(false)
+  const [likeAmount, setLikeAmount] = useState(0)
+  console.log(likeAmount)
 
-    useEffect (()=>{ updateLikes() },[])
+  useEffect (()=>{ updateLikes() },[isLiked])
 
-    function likeClickBotton(){
+  function likeClickBotton(){
 
-        setIsLiked(!isLiked)
-        if (isLiked){
-            //post removendo like
-        } else {
-            //post adcionando like
-        }
+    if (isLiked){
+
+      deleteLike(postId)
+
+    } else {
+
+      insertLike(postId)
+
     }
-    function updateLikes(){
-        getLikes()
-        .then(({ likes }) => setLikeAmount(likes))
-        .catch(err => {
-            console.error(err)
-          })        
-    }
-    return(
-        <ContainerLikes onClick={() => likeClickBotton()} isLiked={ isLiked ? ("#AC0000"):("#FFFFFF")}>
-              <div>s2</div>
-              <span>{likeAmount} likes</span>
-          </ContainerLikes>
-    )
+    setIsLiked(!isLiked)
+  }
+
+  function updateLikes(){
+    getLikes(postId)
+      .then((res) => {
+        setLikeAmount(res.data?.likeAmount)
+        setIsLiked(res.data?.isLiked)
+      })
+      .catch(err => {
+        console.error(err)
+      })        
+  }
+
+  return(
+    <ContainerLikes onClick={() => likeClickBotton()} isLiked={ isLiked ? ("#AC0000"):("#FFFFFF")}>
+      <div>s2</div>
+      <span>{likeAmount} likes</span>
+    </ContainerLikes>
+  )
 }
 
 const ContainerLikes = styled.div`
