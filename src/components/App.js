@@ -5,6 +5,7 @@ import SignUp from "./Signup";
 import Login from "./Login";
 import Timeline from "./Timeline";
 import HashtagPage from "./hashtags/hashtagPage";
+import UserPage from "./UserPage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
             <Route path="/sign-up" element={ < SignUp /> } />
             <Route path="/timeline" element={<Timeline />}/>
             <Route path="/hashtag/:hashtag" element={<HashtagPage/>}/>
+            <Route path="/user/:userId" element={<UserPage/>}/>
           </Routes>
       </GlobalContextProvider>
     </Router>

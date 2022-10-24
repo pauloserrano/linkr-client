@@ -46,6 +46,9 @@ const getHashtagsRanking = async () => {
 const getPostsHashtag = async (hashtag) => {
     return api.get(`/search/hashtag/${hashtag}`)
 }
+const getPostsUserId = async (userId) => {
+    return api.get(`/user/${userId}`)
+}
 
 const setPost = async ({ link, body }) => {
     return api.post('/post', 
@@ -56,4 +59,4 @@ const setPost = async ({ link, body }) => {
     )
 }
 
-export { login, signUp, endSession, getPosts, setPost, getHashtagsRanking, getPostsHashtag, getLikes, insertLike, deleteLike, getUser};
+export { login, signUp, endSession, getPosts, setPost, getHashtagsRanking, getPostsHashtag, getLikes, insertLike, deleteLike, getUser,getPostsUserId};
