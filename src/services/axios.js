@@ -12,6 +12,18 @@ const signUp = ({ email, password, name, pictureUrl }) => {
     return api.post('/signup', { email, password, name, pictureUrl });
 };
 
+const endSession = async () => {
+    return api.patch('/logout', {}, { headers: {
+        Authorization: `Bearer ${localStorage.getItem("refreshToken")}`
+    }})
+}
+
+const getUser = async () => {
+    return api.get('/user', { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }})
+};
+
 const getPosts = async () => {
     return api.get('/timeline')
 }
@@ -25,4 +37,4 @@ const setPost = async ({ link, body }) => {
     )
 }
 
-export { login, signUp, getPosts, setPost };
+export { login, signUp, endSession, getUser, getPosts, setPost };
