@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
-import { getPosts, setPost, getHashtagsRanking } from "../services/axios";
+import { getPosts, setPost, getUser, getHashtagsRanking } from "../services/axios";
 import useForm from "../hooks/useForm";
 import Header from "../common/Header";
 import Feed from "../common/Feed";
+import useGlobalContext from "../hooks/useGlobalContext.js";
 import HashtagTrending from "../common/hashtagsTrending";
 
 const Timeline = () => {
@@ -31,6 +32,18 @@ const Timeline = () => {
         setIsDisabled(false)
       })
   }
+
+  const { setUser, user } = useGlobalContext();
+
+  const fillUser = () => {
+    getUser()
+    .then(({ data }) => {
+      setUser({ pictureUrl: data.pictureUrl });
+    })
+    .catch(err => {
+      console.error(err);
+    }) 
+  } 
 
   const updatePosts = () => {
 
@@ -60,7 +73,7 @@ const Timeline = () => {
             <Feed>
               <Feed.Title>timeline</Feed.Title>
               <NewPostWrapper isDisabled={isDisabled}>
-                <img src="https://picsum.photos/200/200" alt="abc" />
+                <img src={ user.pictureUrl || "https://picsum.photos/200/200"} alt="abc" />
                 <form onSubmit={handleSubmit}>
                   <h3>What are you going to share today?</h3>
                   <input 
