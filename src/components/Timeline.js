@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
-import { getPosts, setPost, getUser } from "../services/axios";
+import { getPosts, setPost, getUser, getHashtagsRanking } from "../services/axios";
 import useForm from "../hooks/useForm";
 import Header from "../common/Header";
 import Feed from "../common/Feed";
 import useGlobalContext from "../hooks/useGlobalContext.js";
+import HashtagTrending from "../common/hashtagsTrending";
 
 const Timeline = () => {
   const [posts, setPosts] = useState()
@@ -14,12 +15,9 @@ const Timeline = () => {
     link: "",
     body: ""
   })
+  const [hashtagList, setHashtagList] = useState([])
 
-  useEffect(() => {
-    updatePosts();
-    fillUser();
-  }, [])
-
+  useEffect(() => updatePosts(), [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -48,6 +46,13 @@ const Timeline = () => {
   } 
 
   const updatePosts = () => {
+
+    getHashtagsRanking()
+    .then(({ data }) => setHashtagList(data))
+    .catch(err => {
+      console.error(err)
+    })
+
     getPosts()
     .then(({ data }) => setPosts(data))
     .catch(err => {
@@ -64,6 +69,7 @@ const Timeline = () => {
     <>
         <Header />
         <TimelineWrapper>
+            <HashtagTrending hashtagList={hashtagList}/>
             <Feed>
               <Feed.Title>timeline</Feed.Title>
               <NewPostWrapper isDisabled={isDisabled}>
@@ -95,6 +101,7 @@ const Timeline = () => {
               ))}
             </Feed>
         </TimelineWrapper>
+        
     </>
   )
 }

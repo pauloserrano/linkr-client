@@ -1,4 +1,6 @@
 import { FeedWrapper, PostWrapper } from "../styles";
+import LikeContainer from "./LikeContainer";
+import styled from "styled-components";
 
 const Feed = ({ children, ...otherProps }) => {
   return (
@@ -13,11 +15,14 @@ Feed.Title = ({ children, ...otherProps }) => {
 }
 
 Feed.Post = ({ post, ...otherProps}) => {
-  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
-  
+  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage, id } = post
+
   return (
     <PostWrapper {...otherProps}>
-        <img src={pictureUrl} alt={name} />
+        <div> 
+          <UserImage src={pictureUrl} alt={name} />
+          <LikeContainer postId={id}/>
+        </div>
         <div className="content">
             <h3>{name}</h3>
             {body && <p>{body}</p>}
@@ -41,5 +46,10 @@ Feed.Status = ({ loading, error }) => {
     </>
   )
 }
+
+const UserImage = styled.img`
+  width: 50px;
+  border-radius: 50%;
+`
 
 export default Feed

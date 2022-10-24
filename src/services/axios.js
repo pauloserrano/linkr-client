@@ -28,6 +28,25 @@ const getPosts = async () => {
     return api.get('/timeline')
 }
 
+const getLikes = async (postId) => {
+    return api.get(`/likeamount/${postId}`)
+}
+
+const insertLike = async (postId) => {
+    return api.post(`/like/${postId}`)
+}
+
+const deleteLike = async (postId) => {
+    return api.delete(`/like/${postId}`)
+}
+
+const getHashtagsRanking = async () => {
+    return api.get('ranking/hashtag')
+}
+const getPostsHashtag = async (hashtag) => {
+    return api.get(`/search/hashtag/${hashtag}`)
+}
+
 const setPost = async ({ link, body }) => {
     return api.post('/post', 
         { link, body }, 
@@ -37,4 +56,4 @@ const setPost = async ({ link, body }) => {
     )
 }
 
-export { login, signUp, endSession, getUser, getPosts, setPost };
+export { login, signUp, endSession, getPosts, setPost, getHashtagsRanking, getPostsHashtag, getLikes, insertLike, deleteLike, getUser};
