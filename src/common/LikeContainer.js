@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { getLikes, deleteLike, insertLike } from "../services/axios";
+import { AiFillHeart as FilledHeart } from "react-icons/ai"
+import { AiOutlineHeart as EmptyHeart } from "react-icons/ai"
 
 export default function LikeContainer ({postId}){
 
@@ -36,8 +38,8 @@ export default function LikeContainer ({postId}){
   }
 
   return(
-    <ContainerLikes onClick={() => likeClickBotton()} isLiked={ isLiked ? ("#AC0000"):("#FFFFFF")}>
-      <div>s2</div>
+    <ContainerLikes onClick={() => likeClickBotton()}>
+      <div> {(isLiked ? (<FilledHeartStyled/> ):(<EmptyHeartStyled/> ))}</div>
       <span>{likeAmount} likes</span>
     </ContainerLikes>
   )
@@ -58,12 +60,6 @@ const ContainerLikes = styled.div`
     margin-top: 15px;
     width:25px;
     height:25px;
-    
-    color:black;
-    font-weight:700;
-    background-color:${(props)=>props.isLiked};
-
-    border-radius:8px;
   }
   span {
     text-align:center;
@@ -73,4 +69,11 @@ const ContainerLikes = styled.div`
     color:white;
   }
 `
-
+const FilledHeartStyled = styled(FilledHeart)`
+  color:#AC0000;
+  font-size:25px;
+`
+const EmptyHeartStyled = styled(EmptyHeart)`
+  color:#FFFFFF;
+  font-size:25px;
+`
