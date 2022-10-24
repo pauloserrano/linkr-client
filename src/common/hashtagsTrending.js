@@ -3,20 +3,10 @@ import {useNavigate} from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function HashtagTrending(){
+export default function HashtagTrending({hashtagList}){
     
     const navigate = useNavigate()
 
-    
-    const [hashtagList, setHashtagList] = useState([])
-    
-    useEffect(() =>{
-      
-        const promisse = axios.get("http://localhost:4000/ranking/hashtag/testes")
-        promisse.then( req => setHashtagList( req.data))
-        setHashtagList(promisse)
-   
-    }, [])
 
     function clicked (nome){
         console.log(nome)
