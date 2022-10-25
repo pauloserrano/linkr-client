@@ -10,7 +10,7 @@ const Wrapper = styled.section`
     position: relative;
 
 
-    .btn-delete, .like-container button{
+    .btn-delete, .btn-edit, .like-container button{
         height: fit-content;
         color: white;
         border: none;

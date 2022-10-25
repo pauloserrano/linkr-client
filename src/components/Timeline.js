@@ -43,9 +43,7 @@ const Timeline = () => {
     })
   }
 
-  const resetForm = () => {
-    setForm({ link: "", body: "" })
-  }
+  const resetForm = () => setForm({ link: "", body: "" })
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -66,7 +64,7 @@ const Timeline = () => {
   const handleDelete = (id) => {    
     deletePost({ id })
       .then(() => updatePosts())
-      .catch((err) => alert("An error occured. Your post could not be deleted"))
+      .catch(() => alert("An error occured. Your post could not be deleted"))
   }
 
   return (

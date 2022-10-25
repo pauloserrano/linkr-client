@@ -1,5 +1,6 @@
 import { FaTrash } from "react-icons/fa"
 import DeleteBtn from "../components/DeleteBtn";
+import EditBtn from "../components/EditBtn";
 import { FeedWrapper, PostWrapper } from "../styles";
 import LikeContainer from "./LikeContainer";
 
@@ -36,6 +37,7 @@ Feed.Post = ({ post, userId, handleDelete, handleLike, ...otherProps}) => {
           </a>
           { userId === post.userId && 
             <div className="btn-container">
+              <EditBtn />
               <DeleteBtn 
                 handler={handleDelete} 
               />
