@@ -36,9 +36,6 @@ Feed.Post = ({ post, userId, handleDelete, handleLike, ...otherProps}) => {
           </a>
           { userId === post.userId && 
             <div className="btn-container">
-              {false && <button className="btn-delete" onClick={handleDelete}>
-                <FaTrash size={12} />
-              </button>}
               <DeleteBtn 
                 handler={handleDelete} 
               />
