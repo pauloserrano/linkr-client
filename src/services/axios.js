@@ -67,6 +67,15 @@ const deletePost = async ({ id }) => {
     )
 }
 
+const updatePost = async ({ id, body }) => {
+    return api.patch(`/post/${id}`,
+        { body },
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
 export { 
     login, 
     signUp, 
@@ -80,5 +89,6 @@ export {
     insertLike, 
     deleteLike, 
     getUser,
-    getPostsUserId
+    getPostsUserId,
+    updatePost
 };

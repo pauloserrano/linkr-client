@@ -1,5 +1,6 @@
 import { FaTrash } from "react-icons/fa"
 import DeleteBtn from "../components/DeleteBtn";
+import EditBody from "../components/EditBody";
 import EditBtn from "../components/EditBtn";
 import { FeedWrapper, PostWrapper } from "../styles";
 import LikeContainer from "./LikeContainer";
@@ -16,7 +17,7 @@ Feed.Title = ({ children, ...otherProps }) => {
     return (<h2 {...otherProps}>{children}</h2>)
 }
 
-Feed.Post = ({ post, userId, handleDelete, handleLike, ...otherProps}) => {
+Feed.Post = ({ post, userId, handleDelete, isEditable, setIsEditable, ...otherProps}) => {
   const { id, pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
   
   return (
@@ -28,7 +29,11 @@ Feed.Post = ({ post, userId, handleDelete, handleLike, ...otherProps}) => {
 
         <main>
           <h3 className="username">{name}</h3>
-          {body && <p className="body">{body}</p>}
+          <EditBody
+            post={post}
+            isEditable={isEditable}
+            setIsEditable={setIsEditable}
+          />
           <a className="link" href={link} target="_blank" rel="noopener noreferrer">
             <p className="title">{metaTitle}</p>
             {metaDescription && <p className="description">{metaDescription}</p>}
@@ -37,7 +42,9 @@ Feed.Post = ({ post, userId, handleDelete, handleLike, ...otherProps}) => {
           </a>
           { userId === post.userId && 
             <div className="btn-container">
-              <EditBtn />
+              <EditBtn 
+                setIsEditable={setIsEditable}
+              />
               <DeleteBtn 
                 handler={handleDelete} 
               />
@@ -47,6 +54,7 @@ Feed.Post = ({ post, userId, handleDelete, handleLike, ...otherProps}) => {
     </PostWrapper>
   )
 }
+
 
 Feed.Status = ({ loading, error }) => {
   return (

@@ -12,19 +12,22 @@ const Timeline = () => {
   const [posts, setPosts] = useState()
   const [error, setError] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
+  const [isEditable, setIsEditable] = useState(false)
   const [form, handleForm, setForm] = useForm({ link: "", body: "" })
   const [hashtagList, setHashtagList] = useState([])
+  
+  useEffect(() => {
+    updatePosts()
+  }, [posts])
 
-  useEffect(() => updatePosts(), [])
+  useEffect(() => {
+    fillUser()
+  }, [])
 
   const fillUser = () => {
     getUser()
-    .then(({ data }) => {
-      setUser({ pictureUrl: data.pictureUrl });
-    })
-    .catch(err => {
-      console.error(err);
-    }) 
+    .then(({ data: { name, pictureUrl, id: userId} }) => setUser({ name, pictureUrl, userId }))
+    .catch(console.error) 
   } 
 
   const updatePosts = () => {
@@ -100,8 +103,9 @@ const Timeline = () => {
                   key={index} 
                   post={post}
                   userId={user.userId}
-                  handleDelete={() => handleDelete(post.id)} 
-                  handleLike={() => {}} 
+                  handleDelete={() => handleDelete(post.id)}
+                  isEditable={isEditable}
+                  setIsEditable={setIsEditable}
                 />
               ))}
             </Feed>
