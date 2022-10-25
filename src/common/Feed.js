@@ -1,3 +1,4 @@
+import { FaTrash, FaRegHeart } from "react-icons/fa"
 import { FeedWrapper, PostWrapper } from "../styles";
 
 const Feed = ({ children, ...otherProps }) => {
@@ -12,22 +13,36 @@ Feed.Title = ({ children, ...otherProps }) => {
     return (<h2 {...otherProps}>{children}</h2>)
 }
 
-Feed.Post = ({ post, ...otherProps}) => {
+Feed.Post = ({ post, handleDelete, handleLike, ...otherProps}) => {
   const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
   
   return (
     <PostWrapper {...otherProps}>
-        <img src={pictureUrl} alt={name} />
-        <div className="content">
-            <h3>{name}</h3>
-            {body && <p>{body}</p>}
-            <a href={link} target="_blank" rel="noopener noreferrer">
-              <p className="title">{metaTitle}</p>
-              {metaDescription && <p className="description">{metaDescription}</p>}
-              <p className="link">{link}</p>
-              <img src={metaImage} alt={metaTitle} />
-            </a>
-        </div>
+        <aside>
+          <img className="user-picture" src={pictureUrl} alt={name} />
+          <div className="like-container">
+            <button onClick={handleLike}>
+              <FaRegHeart size={20}/>
+            </button>
+            <p title="João, Maria e outras 11 pessoas">13 Likes</p>
+          </div>
+        </aside>
+
+        <main>
+          <h3 className="username">{name}</h3>
+          {body && <p className="body">{body}</p>}
+          <a className="link" href={link} target="_blank" rel="noopener noreferrer">
+            <p className="title">{metaTitle}</p>
+            {metaDescription && <p className="description">{metaDescription}</p>}
+            <p className="link">{link}</p>
+            <img src={metaImage} alt={metaTitle} />
+          </a>
+          <div className="btn-container">
+            <button className="btn-delete" onClick={handleDelete}>
+              <FaTrash size={12} />
+            </button>
+          </div>
+        </main>
     </PostWrapper>
   )
 }

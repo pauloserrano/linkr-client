@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
-import { getPosts, setPost } from "../services/axios";
+import { deletePost, getPosts, setPost } from "../services/axios";
 import useForm from "../hooks/useForm";
 import Header from "../common/Header";
 import Feed from "../common/Feed";
@@ -16,21 +16,6 @@ const Timeline = () => {
 
   useEffect(() => updatePosts(), [])
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setIsDisabled(true)
-    setPost({ ...form })
-      .then(() => {
-        updatePosts()
-        resetForm()
-        setIsDisabled(false)
-      }).catch(() => {
-        alert("Houve um erro ao publicar seu link")
-        setIsDisabled(false)
-      })
-  }
-
   const updatePosts = () => {
     getPosts()
     .then(({ data }) => setPosts(data))
@@ -42,6 +27,29 @@ const Timeline = () => {
 
   const resetForm = () => {
     setForm({ link: "", body: "" })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    
+    setIsDisabled(true)
+    setPost({ ...form })
+      .then(() => {
+        updatePosts()
+        resetForm()
+        setIsDisabled(false)
+      })
+      .catch(() => {
+        alert("Houve um erro ao publicar seu link")
+        setIsDisabled(false)
+      })
+  }
+
+  const handleDelete = (id) => {
+    const confirmation = window.confirm("Are you sure you want to delete this post?")
+    if (!confirmation) return
+    
+    deletePost({ id }).then(() => updatePosts()).catch((err) => alert(err.message))
   }
 
   return (
@@ -68,14 +76,17 @@ const Timeline = () => {
                     onChange={handleForm} 
                     placeholder="Awesome article about #javascript" 
                   />
-                  <button type="submit">{ isDisabled ? "Publishing..." : "Publish"}</button>
+                  <button type="submit">{ isDisabled ? "Publishing..." : "Publish" }</button>
                 </form>
               </NewPostWrapper>
               <Feed.Status loading={posts} error={error} />
               {posts?.length > 0 && posts.map((post, index) => (
                 <Feed.Post 
                   key={index} 
-                  post={post} />
+                  post={post}
+                  handleDelete={() => handleDelete(post.id)} 
+                  handleLike={() => {}} 
+                />
               ))}
             </Feed>
         </TimelineWrapper>

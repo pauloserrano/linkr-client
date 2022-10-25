@@ -25,4 +25,12 @@ const setPost = async ({ link, body }) => {
     )
 }
 
-export { login, signUp, getPosts, setPost };
+const deletePost = async ({ id }) => {
+    return api.delete(`/post/${id}`, 
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+export { login, signUp, getPosts, setPost, deletePost };

@@ -5,10 +5,12 @@ const Wrapper = styled.header`
     align-items: center;
     width: 100%;
     height: min(70px, 20vh);
-    position: relative;
+    position: sticky;
+    top: 0;
     padding: 0.5rem 1.5rem;
     margin-bottom: 2.5rem;
     background-color: #151515;
+    z-index: 1;
 
     h1{
         font-family: 'Passion One', cursive;
