@@ -5,6 +5,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    position: relative;
     background-color: #333;
     width: max(50vw, 600px);
     min-height: 250px;

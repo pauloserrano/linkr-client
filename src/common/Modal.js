@@ -1,11 +1,19 @@
+import { useState } from "react";
 import ReactModal from "react-modal";
 import { ModalWrapper } from "../styles";
+import LoadingSpinner from "./LoadingSpinner";
 
 ReactModal.setAppElement('#root')
 
 const Modal = ({ state, setState, dialog, cancelBtn, confirmBtn, onSubmit }) => {
-    //const handleOpen = () => setState(true)
+    const [isLoading, setIsLoading] = useState(false)
     const handleClose = () => setState(false)
+    //const handleOpen = () => setState(true)
+
+    const handleSubmit = () => {
+        setIsLoading(true)
+        setTimeout(onSubmit, 3000)
+    }
 
   return (
     <ReactModal
@@ -19,10 +27,11 @@ const Modal = ({ state, setState, dialog, cancelBtn, confirmBtn, onSubmit }) => 
                 <button className="btn-cancel" onClick={handleClose}>
                     {cancelBtn ? cancelBtn : 'No'}
                 </button>
-                <button className="btn-confirm" onClick={onSubmit}>
+                <button className="btn-confirm" onClick={handleSubmit}>
                     {confirmBtn ? confirmBtn : 'Yes'}
                 </button>
             </div>
+            {isLoading && <LoadingSpinner />}
         </ModalWrapper>
     </ReactModal>
   )

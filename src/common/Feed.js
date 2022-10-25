@@ -15,7 +15,7 @@ Feed.Title = ({ children, ...otherProps }) => {
 }
 
 Feed.Post = ({ post, userId, handleDelete, handleLike, ...otherProps}) => {
-  const { id, pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
+  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
   
   return (
     <PostWrapper {...otherProps}>
