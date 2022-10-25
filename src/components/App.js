@@ -4,6 +4,7 @@ import { GlobalStyle } from "../styles"
 import SignUp from "./Signup";
 import Login from "./Login";
 import Timeline from "./Timeline";
+import Modal from "../common/Modal";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
             <Route path="/" element={ <Login /> } />
             <Route path="/sign-up" element={ < SignUp /> } />
             <Route path="/timeline" element={<Timeline />}/>
+            <Route path="/modal" element={<Modal />}/>
           </Routes>
       </GlobalContextProvider>
     </Router>

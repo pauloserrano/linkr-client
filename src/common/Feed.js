@@ -1,4 +1,5 @@
 import { FaTrash, FaRegHeart } from "react-icons/fa"
+import DeleteBtn from "../components/DeleteBtn";
 import { FeedWrapper, PostWrapper } from "../styles";
 
 const Feed = ({ children, ...otherProps }) => {
@@ -13,8 +14,8 @@ Feed.Title = ({ children, ...otherProps }) => {
     return (<h2 {...otherProps}>{children}</h2>)
 }
 
-Feed.Post = ({ post, handleDelete, handleLike, ...otherProps}) => {
-  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
+Feed.Post = ({ post, userId, handleDelete, handleLike, ...otherProps}) => {
+  const { id, pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
   
   return (
     <PostWrapper {...otherProps}>
@@ -37,11 +38,16 @@ Feed.Post = ({ post, handleDelete, handleLike, ...otherProps}) => {
             <p className="link">{link}</p>
             <img src={metaImage} alt={metaTitle} />
           </a>
-          <div className="btn-container">
-            <button className="btn-delete" onClick={handleDelete}>
-              <FaTrash size={12} />
-            </button>
-          </div>
+          { userId === post.userId && 
+            <div className="btn-container">
+              {false && <button className="btn-delete" onClick={handleDelete}>
+                <FaTrash size={12} />
+              </button>}
+              <DeleteBtn 
+                handler={handleDelete} 
+              />
+            </div>
+          }
         </main>
     </PostWrapper>
   )

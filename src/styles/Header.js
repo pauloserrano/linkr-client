@@ -30,9 +30,15 @@ const Wrapper = styled.header`
         }
 
         img{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1 / 1;
             height: 100%;
+            object-fit: cover;
             margin-left: 0.5rem;
             border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         button{

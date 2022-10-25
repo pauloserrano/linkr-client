@@ -4,8 +4,10 @@ import { deletePost, getPosts, setPost } from "../services/axios";
 import useForm from "../hooks/useForm";
 import Header from "../common/Header";
 import Feed from "../common/Feed";
+import useGlobalContext from "../hooks/useGlobalContext";
 
 const Timeline = () => {
+  const { user } = useGlobalContext()
   const [posts, setPosts] = useState()
   const [error, setError] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
@@ -45,11 +47,10 @@ const Timeline = () => {
       })
   }
 
-  const handleDelete = (id) => {
-    const confirmation = window.confirm("Are you sure you want to delete this post?")
-    if (!confirmation) return
-    
-    deletePost({ id }).then(() => updatePosts()).catch((err) => alert(err.message))
+  const handleDelete = (id) => {    
+    deletePost({ id })
+      .then(() => updatePosts())
+      .catch((err) => alert("An error occured. Your post could not be deleted"))
   }
 
   return (
@@ -59,7 +60,7 @@ const Timeline = () => {
             <Feed>
               <Feed.Title>timeline</Feed.Title>
               <NewPostWrapper isDisabled={isDisabled}>
-                <img src="https://picsum.photos/200/200" alt="abc" />
+                <img src={user.pictureUrl} alt={user.name} />
                 <form onSubmit={handleSubmit}>
                   <h3>What are you going to share today?</h3>
                   <input 
@@ -84,6 +85,7 @@ const Timeline = () => {
                 <Feed.Post 
                   key={index} 
                   post={post}
+                  userId={user.userId}
                   handleDelete={() => handleDelete(post.id)} 
                   handleLike={() => {}} 
                 />

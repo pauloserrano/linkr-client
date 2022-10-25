@@ -12,7 +12,7 @@ const Header = () => {
             <button>
                 <DropIcon size={24}/>
             </button>
-            <img src={user.pictureUrl} alt="ae" />
+            <img src={user.pictureUrl} alt={user.name} />
         </div>
     </Wrapper>
   )

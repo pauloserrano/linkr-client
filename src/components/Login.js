@@ -38,7 +38,7 @@ const Login = () => {
             const signin = await api.login(form);
             localStorage.setItem("accessToken", signin.data.token);
             localStorage.setItem("refreshToken", signin.data.refreshToken);
-
+            setUser(signin.data.user)
             navigate("/timeline");
         } catch (error) {
             setButtonBlocked(false);
