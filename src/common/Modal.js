@@ -12,7 +12,7 @@ const Modal = ({ state, setState, dialog, cancelBtn, confirmBtn, onSubmit }) => 
 
     const handleSubmit = () => {
         setIsLoading(true)
-        setTimeout(onSubmit, 3000)
+        onSubmit()
     }
 
   return (

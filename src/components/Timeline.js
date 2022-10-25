@@ -1,24 +1,40 @@
 import { useEffect, useState } from "react";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
-import { deletePost, getPosts, setPost } from "../services/axios";
+import { getPosts, setPost, deletePost, getUser, getHashtagsRanking } from "../services/axios";
 import useForm from "../hooks/useForm";
 import Header from "../common/Header";
 import Feed from "../common/Feed";
 import useGlobalContext from "../hooks/useGlobalContext";
+import HashtagTrending from "../common/hashtagsTrending";
 
 const Timeline = () => {
-  const { user } = useGlobalContext()
+  const { user, setUser } = useGlobalContext()
   const [posts, setPosts] = useState()
   const [error, setError] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
-  const [form, handleForm, setForm] = useForm({
-    link: "",
-    body: ""
-  })
+  const [form, handleForm, setForm] = useForm({ link: "", body: "" })
+  const [hashtagList, setHashtagList] = useState([])
 
   useEffect(() => updatePosts(), [])
 
+  const fillUser = () => {
+    getUser()
+    .then(({ data }) => {
+      setUser({ pictureUrl: data.pictureUrl });
+    })
+    .catch(err => {
+      console.error(err);
+    }) 
+  } 
+
   const updatePosts = () => {
+
+    getHashtagsRanking()
+    .then(({ data }) => setHashtagList(data))
+    .catch(err => {
+      console.error(err)
+    })
+
     getPosts()
     .then(({ data }) => setPosts(data))
     .catch(err => {
@@ -91,7 +107,9 @@ const Timeline = () => {
                 />
               ))}
             </Feed>
+            <HashtagTrending hashtagList={hashtagList}/>
         </TimelineWrapper>
+        
     </>
   )
 }

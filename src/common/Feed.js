@@ -1,6 +1,7 @@
-import { FaTrash, FaRegHeart } from "react-icons/fa"
+import { FaTrash } from "react-icons/fa"
 import DeleteBtn from "../components/DeleteBtn";
 import { FeedWrapper, PostWrapper } from "../styles";
+import LikeContainer from "./LikeContainer";
 
 const Feed = ({ children, ...otherProps }) => {
   return (
@@ -15,18 +16,13 @@ Feed.Title = ({ children, ...otherProps }) => {
 }
 
 Feed.Post = ({ post, userId, handleDelete, handleLike, ...otherProps}) => {
-  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
+  const { id, pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
   
   return (
     <PostWrapper {...otherProps}>
         <aside>
           <img className="user-picture" src={pictureUrl} alt={name} />
-          <div className="like-container">
-            <button onClick={handleLike}>
-              <FaRegHeart size={20}/>
-            </button>
-            <p title="João, Maria e outras 11 pessoas">13 Likes</p>
-          </div>
+          <LikeContainer postId={id}/>
         </aside>
 
         <main>

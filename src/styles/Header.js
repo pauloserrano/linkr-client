@@ -21,6 +21,7 @@ const Wrapper = styled.header`
 
     .user-container{
         display: flex;
+        justify-content: center;
         align-items: center;
         height: 100%;
         margin-left: auto;
@@ -47,6 +48,25 @@ const Wrapper = styled.header`
             color: #fff;
         }
     }
+
+    .header-menu {
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        background-color: #151515;
+        width: 10rem;
+        height: 8vh;
+
+        position: absolute;
+        top: min(65px, 20vh);
+        right: 0;
+
+        h4 {
+            font-family: 'Passion One', cursive;
+            font-weight: 400;
+            margin-left: 0.6rem;
+        }
+        }
 `
 
 export default Wrapper

@@ -12,8 +12,42 @@ const signUp = ({ email, password, name, pictureUrl }) => {
     return api.post('/signup', { email, password, name, pictureUrl });
 };
 
+const endSession = async () => {
+    return api.patch('/logout', {}, { headers: {
+        Authorization: `Bearer ${localStorage.getItem("refreshToken")}`
+    }})
+}
+
+const getUser = async () => {
+    return api.get('/user', { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }})
+};
+
 const getPosts = async () => {
     return api.get('/timeline')
+}
+
+const getLikes = async (postId) => {
+    return api.get(`/likeamount/${postId}`)
+}
+
+const insertLike = async (postId) => {
+    return api.post(`/like/${postId}`)
+}
+
+const deleteLike = async (postId) => {
+    return api.delete(`/like/${postId}`)
+}
+
+const getHashtagsRanking = async () => {
+    return api.get('ranking/hashtag')
+}
+const getPostsHashtag = async (hashtag) => {
+    return api.get(`/search/hashtag/${hashtag}`)
+}
+const getPostsUserId = async (userId) => {
+    return api.get(`/user/${userId}`)
 }
 
 const setPost = async ({ link, body }) => {
@@ -33,4 +67,18 @@ const deletePost = async ({ id }) => {
     )
 }
 
-export { login, signUp, getPosts, setPost, deletePost };
+export { 
+    login, 
+    signUp, 
+    endSession, 
+    getPosts, 
+    setPost, 
+    deletePost, 
+    getHashtagsRanking, 
+    getPostsHashtag, 
+    getLikes, 
+    insertLike, 
+    deleteLike, 
+    getUser,
+    getPostsUserId
+};
