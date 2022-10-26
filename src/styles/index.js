@@ -5,6 +5,7 @@ import PostWrapper from "./Post";
 import FeedWrapper from "./Feed"
 import NewPostWrapper from "./NewPost"
 import ModalWrapper from "./Modal"
+import CommentsWrapper from "./Comments"
 
 export { 
     GlobalStyle, 
@@ -13,5 +14,6 @@ export {
     TimelineWrapper, 
     FeedWrapper, 
     NewPostWrapper,
-    ModalWrapper 
+    ModalWrapper,
+    CommentsWrapper
 }

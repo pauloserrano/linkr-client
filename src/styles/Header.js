@@ -10,7 +10,7 @@ const Wrapper = styled.header`
     padding: 0.5rem 1.5rem;
     margin-bottom: 2.5rem;
     background-color: #151515;
-    z-index: 1;
+    z-index: 5;
 
     h1{
         font-family: 'Passion One', cursive;

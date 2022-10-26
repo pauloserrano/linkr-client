@@ -1,11 +1,12 @@
 import { useRef, useState, useEffect } from "react"
-import { PostWrapper } from "../styles"
+import { PostWrapper, CommentsWrapper } from "../styles"
 import LikeContainer from "../common/LikeContainer"
 import EditBody from "../components/EditBody"
 import EditBtn from "../components/EditBtn"
 import DeleteBtn from "../components/DeleteBtn"
 import CommentBtn from "./CommentBtn"
-import { getComments, setComment } from "../services/axios"
+import { getComments } from "../services/axios"
+import NewComment from "./NewComment"
 
 const Post = ({ post, userId, refresh }) => {
     const { id, pictureUrl, name, link, metaTitle, metaDescription, metaImage } = post
@@ -16,12 +17,17 @@ const Post = ({ post, userId, refresh }) => {
     const postRef = useRef()
 
     useEffect(() => {
+      updateComments()
+    }, [])
+
+    const updateComments = () => {
       getComments({ id: post.id })
         .then(({ data }) => setComments(data))
         .catch(console.error)
-    }, [])
+    }
     
     return (
+      <>
       <PostWrapper>
           <aside>
             <img className="user-picture" src={pictureUrl} alt={name} />
@@ -59,12 +65,22 @@ const Post = ({ post, userId, refresh }) => {
               </div>
             }
           </main>
-          <footer>
-            {showComments && comments.map(comment => (<>
-              {comment.body}
-            </>))}
-          </footer>
       </PostWrapper>
+      <CommentsWrapper>
+        {showComments && 
+            comments.map(({ pictureUrl, name, body }) => (
+              <div className="comment">
+                <img className="user-picture" src={pictureUrl} alt={name} />
+                <span>
+                  <h4>{name}</h4>
+                  <p>{body}</p>
+                </span>
+              </div>
+            ))
+        }
+        <NewComment postId={post.id} refresh={updateComments} />
+      </CommentsWrapper>
+      </>
     )
   }
 

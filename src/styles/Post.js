@@ -9,6 +9,7 @@ const Wrapper = styled.section`
     border-radius: 1rem;
     background-color: #171717;
     position: relative;
+    z-index: 1;
 
 
     .btn-delete, .btn-edit, .btn-comment{
