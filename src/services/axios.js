@@ -76,6 +76,23 @@ const updatePost = async ({ id, body }) => {
     )
 }
 
+const getComments = async ({ id }) => {
+    return api.get(`/post/${id}/comments`,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+const setComment = async ({ id, body }) => {
+    return api.post(`/post/${id}/comment`,
+        { body },
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
 export { 
     login, 
     signUp, 
@@ -90,5 +107,7 @@ export {
     deleteLike, 
     getUser,
     getPostsUserId,
-    updatePost
+    updatePost,
+    getComments,
+    setComment
 };
