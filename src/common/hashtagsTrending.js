@@ -36,15 +36,13 @@ export default function HashtagTrending({hashtagList}){
     )
 }
 
-const Container = styled.div`
-    @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700&family=Playball&family=Recursive:wght@300;400;500;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lexend+Deca:wght@100;200;300;400;500;600;700&family=Playball&family=Recursive:wght@300;400;500;600;700&display=swap');
-    
-    width:301px;
-    height: 406px;
+const Container = styled.div`    
+    width:300px;
+    height: 400px;
     background-color: #171717;
     border-radius: 16px;
-
+    position: sticky;
+    top: 110px;
     color:#ffffff;
 
 `
@@ -55,6 +53,7 @@ const Tittle = styled.div`
 
     display:flex;
     align-items:center;
+    
     p{
         font-weight:700;
         font-size:27px;

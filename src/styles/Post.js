@@ -1,30 +1,87 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
     gap: 1rem;
     width: 100%;
     padding: 1rem;
     border-radius: 1rem;
     background-color: #171717;
+    position: relative;
 
-    > img{
-        width: 50px;
-        border-radius: 50%;
+
+    .btn-delete, .btn-edit, .like-container button{
+        height: fit-content;
+        color: white;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+    
+    .btn-container{
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
     }
 
+    aside{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-    .content{
-
-        h3, > p{
-            margin-bottom: 0.5rem
+        .user-picture{
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
         }
-    
+
+        .like-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    p{
+        font-size: 0.75rem;
+        color: #FFF;
+    }
+
+    main{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        h3, p{
+            margin-bottom: 0.75rem;
+        }
+
         h3{
             font-size: 1.25rem;
         }
+
+        p{
+            font-size: 1rem;
+            color: #B7B7B7;
+        }
+
+        form{
+            width: 100%;
+            margin-bottom: 0.75rem;
+
+            input{
+                width: 100%;
+                height: fit-content;
+                padding: 0.5em;
+                border: none;
+                border-radius: 5px;
+                font-size: 1rem;
+            }
+        }
     
+
         a{
             position: relative;
             display: flex;
@@ -76,8 +133,6 @@ const Wrapper = styled.section`
             }
         }
     }
-
-
 `
 
 export default Wrapper

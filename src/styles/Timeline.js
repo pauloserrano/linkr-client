@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 const Wrapper = styled.main`
-    width: min(100%, 600px);
+    display: flex;
+    justify-content: center;
     margin: 0 auto;
 `
 

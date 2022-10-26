@@ -11,7 +11,7 @@ export default function LikeContainer ({postId}){
   const [likeInfo, setLikeInfo] = useState(false)
   const [whoLike, setWhoLike] = useState([])
 
-  useEffect (()=>{ updateLikes() },[isLiked])
+  useEffect(updateLikes,[isLiked])
 
   function likeClickBotton(){
 

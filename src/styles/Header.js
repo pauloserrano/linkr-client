@@ -5,10 +5,12 @@ const Wrapper = styled.header`
     align-items: center;
     width: 100%;
     height: min(70px, 20vh);
-    position: relative;
+    position: sticky;
+    top: 0;
     padding: 0.5rem 1.5rem;
     margin-bottom: 2.5rem;
     background-color: #151515;
+    z-index: 1;
 
     h1{
         font-family: 'Passion One', cursive;
@@ -29,9 +31,15 @@ const Wrapper = styled.header`
         }
 
         img{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1 / 1;
             height: 100%;
+            object-fit: cover;
             margin-left: 0.5rem;
             border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         button{

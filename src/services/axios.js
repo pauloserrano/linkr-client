@@ -59,4 +59,36 @@ const setPost = async ({ link, body }) => {
     )
 }
 
-export { login, signUp, endSession, getPosts, setPost, getHashtagsRanking, getPostsHashtag, getLikes, insertLike, deleteLike, getUser,getPostsUserId};
+const deletePost = async ({ id }) => {
+    return api.delete(`/post/${id}`, 
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+const updatePost = async ({ id, body }) => {
+    return api.patch(`/post/${id}`,
+        { body },
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+export { 
+    login, 
+    signUp, 
+    endSession, 
+    getPosts, 
+    setPost, 
+    deletePost, 
+    getHashtagsRanking, 
+    getPostsHashtag, 
+    getLikes, 
+    insertLike, 
+    deleteLike, 
+    getUser,
+    getPostsUserId,
+    updatePost
+};
