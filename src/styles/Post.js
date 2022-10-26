@@ -14,7 +14,6 @@ const Wrapper = styled.section`
         border-radius: 50%;
     }
 
-
     .content{
 
         h3, > p{
@@ -59,6 +58,10 @@ const Wrapper = styled.section`
             }
 
             .link{
+                display: inline-block;
+                width: 30rem; // links with big lenghts was breaking layout
+                overflow-wrap: break-word;
+
                 font-weight: bold;
             }
     

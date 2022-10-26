@@ -4,7 +4,8 @@ const SearchBarWrapper = styled.div`
     width: 50%;
     position: absolute;
     font-family: 'Lato', sans-serif;
-    
+    outline: none;
+
     input {
         width: 100%;
         height: 6vh;
@@ -16,6 +17,7 @@ const SearchBarWrapper = styled.div`
         font-size: 1rem;
         color: black;
         font-weight: 500;
+        outline: none;
     }
 
     input::placeholder {
