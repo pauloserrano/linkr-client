@@ -30,6 +30,12 @@ const Wrapper = styled.section`
             font-weight: bold;
             color: #F3F3F3;
             margin-bottom: 0.25em;
+
+            .user-status{
+                color: #565656;
+                font-weight: 500;
+                font-size: 0.9em;
+            }
         }
 
         p{

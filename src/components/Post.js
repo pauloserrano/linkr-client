@@ -72,7 +72,11 @@ const Post = ({ post, userId, refresh }) => {
               <div className="comment">
                 <img className="user-picture" src={pictureUrl} alt={name} />
                 <span>
-                  <h4>{name}</h4>
+                  <h4>{name} 
+                    <span className="user-status">
+                      {post.userId === userId && " • post's author"} 
+                    </span>
+                  </h4>
                   <p>{body}</p>
                 </span>
               </div>
