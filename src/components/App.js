@@ -4,7 +4,7 @@ import { GlobalStyle } from "../styles"
 import SignUp from "./Signup";
 import Login from "./Login";
 import Timeline from "./Timeline";
-import HashtagPage from "./hashtags/hashtagPage";
+import HashtagPage from "./hashtagPage";
 import UserPage from "./UserPage";
 
 const App = () => {

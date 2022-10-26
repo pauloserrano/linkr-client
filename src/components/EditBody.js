@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import useForm from "../hooks/useForm"
 import { updatePost } from "../services/axios"
 import { HashtagBoldStyle } from "../styles/HashtagBold"
+
 
 const EditBody = ({ post, isEditable, setIsEditable }) => {
     const [form, handleForm, setForm] = useForm({ body: post.body })
     const [isDisabled, setIsDisabled] = useState(false)
 
+    const navigate = useNavigate()
     const tokenSeparador = "/a7199fb05606b0d193d79a2dd6c2b537/"
     const bodyFormated = bodyFormatFunction(post.body, tokenSeparador)
 
@@ -76,7 +79,7 @@ const EditBody = ({ post, isEditable, setIsEditable }) => {
             {bodyFormated && 
               <p>{bodyFormated.map(e => {
                 if (e.includes(tokenSeparador)){
-                  return <HashtagBoldStyle onClick={() =>console.log("/hashtag/"+e.replace(`${tokenSeparador}#`, ""))}>{e.replace(tokenSeparador, "") + " "}</HashtagBoldStyle>
+                  return <HashtagBoldStyle onClick={() =>navigate("/hashtag/"+e.replace(`${tokenSeparador}#`, ""))}>{e.replace(tokenSeparador, "") + " "}</HashtagBoldStyle>
                 } else return <span>{e + " "}</span>})}
               </p>
             }
