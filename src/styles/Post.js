@@ -11,8 +11,7 @@ const Wrapper = styled.section`
     position: relative;
     z-index: 1;
 
-
-    .btn-delete, .btn-edit, .btn-comment{
+    .btn-delete, .btn-edit, .btn-comment, .btn-repost{
         height: fit-content;
         color: white;
         border: none;

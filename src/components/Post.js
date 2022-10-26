@@ -7,6 +7,7 @@ import DeleteBtn from "../components/DeleteBtn"
 import CommentBtn from "./CommentBtn"
 import { getComments } from "../services/axios"
 import NewComment from "./NewComment"
+import RepostBtn from "./RepostBtn"
 
 const Post = ({ post, userId, refresh }) => {
     const { id, pictureUrl, name, link, metaTitle, metaDescription, metaImage } = post
@@ -35,6 +36,11 @@ const Post = ({ post, userId, refresh }) => {
             <CommentBtn 
               amount={comments.length}
               onClick={() => setShowComments(prev => !prev)}
+            />
+            <RepostBtn 
+              amount={post.reposts}
+              postId={post.id}
+              refresh={refresh}
             />
           </aside>
   

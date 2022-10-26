@@ -44,6 +44,10 @@ const customStyles = {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'transparent',
+        zIndex: '11'
+    },
+    overlay: {
+        zIndex: '10'
     }
 }
 

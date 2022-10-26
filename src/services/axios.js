@@ -93,6 +93,16 @@ const setComment = async ({ id, body }) => {
     )
 }
 
+const repostPost = async ({ id }) => {
+    return api.post(`/repost/${id}`,
+        {},
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+
 export { 
     login, 
     signUp, 
@@ -109,5 +119,6 @@ export {
     getPostsUserId,
     updatePost,
     getComments,
-    setComment
+    setComment,
+    repostPost
 };
