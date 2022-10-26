@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
 import { getPosts, setPost, deletePost, getUser, getHashtagsRanking } from "../services/axios";
 import useForm from "../hooks/useForm";
@@ -12,15 +12,11 @@ const Timeline = () => {
   const [posts, setPosts] = useState()
   const [error, setError] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
-  const [isEditable, setIsEditable] = useState(false)
-  const [form, handleForm, setForm] = useForm({ link: "", body: "" })
   const [hashtagList, setHashtagList] = useState([])
+  const [form, handleForm, setForm] = useForm({ link: "", body: "" })
   
   useEffect(() => {
     updatePosts()
-  }, [posts])
-
-  useEffect(() => {
     fillUser()
   }, [])
 
@@ -31,12 +27,12 @@ const Timeline = () => {
   } 
 
   const updatePosts = () => {
-
+  /*
     getHashtagsRanking()
     .then(({ data }) => setHashtagList(data))
     .catch(err => {
       console.error(err)
-    })
+    })*/
 
     getPosts()
     .then(({ data }) => setPosts(data))
@@ -104,8 +100,6 @@ const Timeline = () => {
                   post={post}
                   userId={user.userId}
                   handleDelete={() => handleDelete(post.id)}
-                  isEditable={isEditable}
-                  setIsEditable={setIsEditable}
                 />
               ))}
             </Feed>

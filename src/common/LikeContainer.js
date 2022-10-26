@@ -8,9 +8,8 @@ export default function LikeContainer ({postId}){
 
   const [isLiked, setIsLiked] = useState(false)
   const [likeAmount, setLikeAmount] = useState(0)
-  console.log(likeAmount)
 
-  useEffect (()=>{ updateLikes() },[isLiked])
+  useEffect(updateLikes,[isLiked])
 
   function likeClickBotton(){
 
