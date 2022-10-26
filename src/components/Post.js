@@ -1,21 +1,41 @@
-import { useRef, useState } from "react"
-import { PostWrapper } from "../styles"
+import { useRef, useState, useEffect } from "react"
+import { PostWrapper, CommentsWrapper } from "../styles"
 import LikeContainer from "../common/LikeContainer"
 import EditBody from "../components/EditBody"
 import EditBtn from "../components/EditBtn"
 import DeleteBtn from "../components/DeleteBtn"
+import CommentBtn from "./CommentBtn"
+import { getComments } from "../services/axios"
+import NewComment from "./NewComment"
 
-const Post = ({ post, userId, handleDelete }) => {
+const Post = ({ post, userId, refresh }) => {
     const { id, pictureUrl, name, link, metaTitle, metaDescription, metaImage } = post
 
     const [isEditable, setIsEditable] = useState(false)
+    const [showComments, setShowComments] = useState(false)
+    const [comments, setComments] = useState([])
     const postRef = useRef()
+
+    useEffect(() => {
+      updateComments()
+    }, [])
+
+    const updateComments = () => {
+      getComments({ id: post.id })
+        .then(({ data }) => setComments(data))
+        .catch(console.error)
+    }
     
     return (
+      <>
       <PostWrapper>
           <aside>
             <img className="user-picture" src={pictureUrl} alt={name} />
             <LikeContainer postId={id}/>
+            <CommentBtn 
+              amount={comments.length}
+              onClick={() => setShowComments(prev => !prev)}
+            />
           </aside>
   
           <main ref={postRef}>
@@ -31,20 +51,40 @@ const Post = ({ post, userId, handleDelete }) => {
               <p className="link">{link}</p>
               <img src={metaImage} alt={metaTitle} />
             </a>
-            { userId === post.userId && 
+            {userId === post.userId && 
               <div className="btn-container">
                 <EditBtn 
-                    isEditing={isEditable}
+                  isEditing={isEditable}
                   setIsEditable={setIsEditable}
                   postRef={postRef}
                 />
                 <DeleteBtn 
-                  handler={handleDelete} 
+                  postId={post.id}
+                  refresh={refresh} 
                 />
               </div>
             }
           </main>
       </PostWrapper>
+      <CommentsWrapper>
+        {showComments && 
+            comments.map(({ pictureUrl, name, body }) => (
+              <div className="comment">
+                <img className="user-picture" src={pictureUrl} alt={name} />
+                <span>
+                  <h4>{name} 
+                    <span className="user-status">
+                      {post.userId === userId && " • post's author"} 
+                    </span>
+                  </h4>
+                  <p>{body}</p>
+                </span>
+              </div>
+            ))
+        }
+        <NewComment postId={post.id} refresh={updateComments} />
+      </CommentsWrapper>
+      </>
     )
   }
 

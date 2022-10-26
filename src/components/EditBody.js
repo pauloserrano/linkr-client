@@ -72,7 +72,7 @@ const EditBody = ({ post, isEditable, setIsEditable }) => {
         ? <form onSubmit={handleSubmit}>
             {isDisabled 
             ? <input type="text" name="body" value={form.body || ""} disabled />
-            : <input type="text" name="body" value={form.body || ""} onChange={handleForm} />
+            : <input type="text" name="body" value={post.body || ""} onChange={handleForm} />
             }
           </form>
         : <>

@@ -1,21 +1,27 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     gap: 1rem;
     width: 100%;
     padding: 1rem;
     border-radius: 1rem;
     background-color: #171717;
     position: relative;
+    z-index: 1;
 
 
-    .btn-delete, .btn-edit, .like-container button{
+    .btn-delete, .btn-edit, .btn-comment{
         height: fit-content;
         color: white;
         border: none;
         background-color: transparent;
         cursor: pointer;
+    }
+
+    .btn-comment{
+        margin: 5px 0;
     }
     
     .btn-container{
@@ -34,7 +40,6 @@ const Wrapper = styled.section`
             height: 50px;
             object-fit: cover;
             border-radius: 50%;
-            margin-bottom: 1rem;
         }
 
         .like-container{
