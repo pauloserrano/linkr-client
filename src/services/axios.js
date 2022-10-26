@@ -50,9 +50,25 @@ const getPostsUserId = async (userId) => {
     return api.get(`/user/${userId}`)
 }
 
+const followById = async (followedId) => {
+    return api.get(`/follows/${followedId}`,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
 const insertFollow = async (body) => {
     return api.post('/follow', 
         body,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+const deleteFollow = async (followedId) => {
+    return api.delete(`/follow/${followedId}`, 
         { headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
         }}
@@ -100,5 +116,7 @@ export {
     getUser,
     getPostsUserId,
     updatePost,
-    insertFollow
+    insertFollow,
+    followById,
+    deleteFollow
 };
