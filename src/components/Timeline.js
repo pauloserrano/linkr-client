@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
 import { getPosts, setPost, deletePost, getUser, getHashtagsRanking } from "../services/axios";
 import useForm from "../hooks/useForm";
@@ -27,12 +27,11 @@ const Timeline = () => {
   } 
 
   const updatePosts = () => {
-  /*
     getHashtagsRanking()
     .then(({ data }) => setHashtagList(data))
     .catch(err => {
       console.error(err)
-    })*/
+    })
 
     getPosts()
     .then(({ data }) => setPosts(data))

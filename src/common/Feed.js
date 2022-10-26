@@ -1,10 +1,5 @@
-import { FaTrash } from "react-icons/fa"
-import DeleteBtn from "../components/DeleteBtn";
-import EditBody from "../components/EditBody";
-import EditBtn from "../components/EditBtn";
 import Post from "../components/Post";
-import { FeedWrapper, PostWrapper } from "../styles";
-import LikeContainer from "./LikeContainer";
+import { FeedWrapper } from "../styles";
 
 const Feed = ({ children, ...otherProps }) => {
   return (
@@ -28,7 +23,6 @@ Feed.Post = ({ post, userId, handleDelete, ...otherProps }) => {
     />
   )
 }
-
 
 Feed.Status = ({ loading, error }) => {
   return (
