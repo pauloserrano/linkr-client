@@ -50,6 +50,15 @@ const getPostsUserId = async (userId) => {
     return api.get(`/user/${userId}`)
 }
 
+const insertFollow = async (body) => {
+    return api.post('/follow', 
+        body,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
 const setPost = async ({ link, body }) => {
     return api.post('/post', 
         { link, body }, 
@@ -90,5 +99,6 @@ export {
     deleteLike, 
     getUser,
     getPostsUserId,
-    updatePost
+    updatePost,
+    insertFollow
 };
