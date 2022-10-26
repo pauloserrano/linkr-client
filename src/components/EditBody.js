@@ -7,7 +7,6 @@ const EditBody = ({ post, isEditable, setIsEditable }) => {
     const [form, handleForm, setForm] = useForm({ body: post.body })
     const [isDisabled, setIsDisabled] = useState(false)
 
-
     const tokenSeparador = "/a7199fb05606b0d193d79a2dd6c2b537/"
     const bodyFormated = bodyFormatFunction(post.body, tokenSeparador)
 
@@ -70,7 +69,7 @@ const EditBody = ({ post, isEditable, setIsEditable }) => {
         ? <form onSubmit={handleSubmit}>
             {isDisabled 
             ? <input type="text" name="body" value={form.body || ""} disabled />
-            : <input type="text" name="body" value={form.body || ""} onChange={handleForm} />
+            : <input type="text" name="body" value={post.body || ""} onChange={handleForm} />
             }
           </form>
         : <>

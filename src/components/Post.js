@@ -7,7 +7,7 @@ import DeleteBtn from "../components/DeleteBtn"
 import CommentBtn from "./CommentBtn"
 import { getComments, setComment } from "../services/axios"
 
-const Post = ({ post, userId, handleDelete }) => {
+const Post = ({ post, userId, refresh }) => {
     const { id, pictureUrl, name, link, metaTitle, metaDescription, metaImage } = post
 
     const [isEditable, setIsEditable] = useState(false)
@@ -48,12 +48,13 @@ const Post = ({ post, userId, handleDelete }) => {
             {userId === post.userId && 
               <div className="btn-container">
                 <EditBtn 
-                    isEditing={isEditable}
+                  isEditing={isEditable}
                   setIsEditable={setIsEditable}
                   postRef={postRef}
                 />
                 <DeleteBtn 
-                  handler={handleDelete} 
+                  postId={post.id}
+                  refresh={refresh} 
                 />
               </div>
             }
