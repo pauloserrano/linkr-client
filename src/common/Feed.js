@@ -1,4 +1,5 @@
 import { FeedWrapper, PostWrapper } from "../styles";
+import { HashtagBoldStyle } from "../styles/HashtagBold"
 import LikeContainer from "./LikeContainer";
 import styled from "styled-components";
 
@@ -17,6 +18,9 @@ Feed.Title = ({ children, ...otherProps }) => {
 Feed.Post = ({ post, ...otherProps}) => {
   const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage, id } = post
 
+  const tokenSeparador = "/a7199fb05606b0d193d79a2dd6c2b537/"
+  const bodyFormated = bodyFormatFunction(body, tokenSeparador)
+
   return (
     <PostWrapper {...otherProps}>
         <div> 
@@ -25,7 +29,15 @@ Feed.Post = ({ post, ...otherProps}) => {
         </div>
         <div className="content">
             <h3>{name}</h3>
-            {body && <p>{body}</p>}
+
+            {bodyFormated && <p>{
+            bodyFormated.map(e => {
+              if (e.includes(tokenSeparador)){
+                return <HashtagBoldStyle onClick={() =>console.log("/hashtag/"+e.replace(`${tokenSeparador}#`, ""))}>{e.replace(tokenSeparador, "") + " "}</HashtagBoldStyle>
+              } else return <span>{e + " "}</span>
+            })
+            }</p>}
+
             <a href={link} target="_blank" rel="noopener noreferrer">
               <p className="title">{metaTitle}</p>
               {metaDescription && <p className="description">{metaDescription}</p>}
@@ -45,6 +57,27 @@ Feed.Status = ({ loading, error }) => {
       {error && 'An error occured while trying to fetch the posts, please refresh the page'}
     </>
   )
+}
+function bodyFormatFunction (texto, tokenSeparador){
+
+  const textoArray = texto.split(" ")
+  const indicesHashtag = []
+  let textoReferenciado = ""
+
+  for (let i = 0; i < textoArray.length; i++) {
+    if(textoArray[i][0] === "#") indicesHashtag.push(i)   
+  }
+  console.log(indicesHashtag)
+  for (let z = 0; z < textoArray.length; z++) {
+    if (indicesHashtag.includes(z)){
+      textoReferenciado += tokenSeparador + textoArray[z] + " "
+    } else{
+      textoReferenciado += textoArray[z] + " "
+    }
+  }
+  textoReferenciado = textoReferenciado.split(" ")
+
+  return textoReferenciado
 }
 
 const UserImage = styled.img`
