@@ -135,7 +135,7 @@ export {
     updatePost,
     insertFollow,
     followById,
-    deleteFollow
+    deleteFollow,
     getComments,
     setComment
 };
