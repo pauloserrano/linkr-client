@@ -95,9 +95,9 @@ const Timeline = () => {
                 </form>
               </NewPostWrapper>
               <Feed.Status loading={posts} error={error} />
-              {posts?.length > 0 && posts.map((post, index) => (
+              {posts?.length > 0 && posts.map((post) => (
                 <Feed.Post 
-                  key={index} 
+                  key={post.id} 
                   post={post}
                   userId={user.userId}
                   refresh={updatePosts}
