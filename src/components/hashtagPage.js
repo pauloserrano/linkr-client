@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import Header from "../../common/Header";
-import { TimelineWrapper, NewPostWrapper } from "../../styles";
-import Feed from "../../common/Feed";
-import { getPostsHashtag } from "../../services/axios";
+import Header from "../common/Header";
+import { TimelineWrapper, NewPostWrapper } from "../styles";
+import Feed from "../common/Feed";
+import { getPostsHashtag } from "../services/axios";
 
 
 
@@ -36,7 +36,7 @@ export default function HashtagPage(){
             <TimelineWrapper>
 
                 <Feed>
-                <Feed.Title>timeline</Feed.Title>
+                <Feed.Title># {hashtag}</Feed.Title>
                 <Feed.Status loading={posts} error={error} />
                 {posts?.length > 0 && posts.map((post, index) => (
                     <Feed.Post 
