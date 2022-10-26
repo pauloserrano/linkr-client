@@ -10,7 +10,7 @@ const Wrapper = styled.section`
     position: relative;
 
 
-    .btn-delete, .like-container button{
+    .btn-delete, .btn-edit, .like-container button{
         height: fit-content;
         color: white;
         border: none;
@@ -55,17 +55,32 @@ const Wrapper = styled.section`
         width: 100%;
 
         h3, p{
-            margin-bottom: 0.75rem
+            margin-bottom: 0.75rem;
+        }
+
+        h3{
+            font-size: 1.25rem;
         }
 
         p{
             font-size: 1rem;
             color: #B7B7B7;
         }
-    
-        h3{
-            font-size: 1.25rem;
+
+        form{
+            width: 100%;
+            margin-bottom: 0.75rem;
+
+            input{
+                width: 100%;
+                height: fit-content;
+                padding: 0.5em;
+                border: none;
+                border-radius: 5px;
+                font-size: 1rem;
+            }
         }
+    
 
         a{
             position: relative;

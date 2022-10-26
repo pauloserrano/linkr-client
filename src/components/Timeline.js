@@ -12,23 +12,21 @@ const Timeline = () => {
   const [posts, setPosts] = useState()
   const [error, setError] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
-  const [form, handleForm, setForm] = useForm({ link: "", body: "" })
   const [hashtagList, setHashtagList] = useState([])
-
-  useEffect(() => updatePosts(), [])
+  const [form, handleForm, setForm] = useForm({ link: "", body: "" })
+  
+  useEffect(() => {
+    updatePosts()
+    fillUser()
+  }, [])
 
   const fillUser = () => {
     getUser()
-    .then(({ data }) => {
-      setUser({ pictureUrl: data.pictureUrl });
-    })
-    .catch(err => {
-      console.error(err);
-    }) 
+    .then(({ data: { name, pictureUrl, id: userId} }) => setUser({ name, pictureUrl, userId }))
+    .catch(console.error) 
   } 
 
   const updatePosts = () => {
-
     getHashtagsRanking()
     .then(({ data }) => setHashtagList(data))
     .catch(err => {
@@ -43,9 +41,7 @@ const Timeline = () => {
     })
   }
 
-  const resetForm = () => {
-    setForm({ link: "", body: "" })
-  }
+  const resetForm = () => setForm({ link: "", body: "" })
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -66,7 +62,7 @@ const Timeline = () => {
   const handleDelete = (id) => {    
     deletePost({ id })
       .then(() => updatePosts())
-      .catch((err) => alert("An error occured. Your post could not be deleted"))
+      .catch(() => alert("An error occured. Your post could not be deleted"))
   }
 
   return (
@@ -102,8 +98,7 @@ const Timeline = () => {
                   key={index} 
                   post={post}
                   userId={user.userId}
-                  handleDelete={() => handleDelete(post.id)} 
-                  handleLike={() => {}} 
+                  handleDelete={() => handleDelete(post.id)}
                 />
               ))}
             </Feed>
