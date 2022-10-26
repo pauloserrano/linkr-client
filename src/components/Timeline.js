@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
-import { getPosts, setPost, deletePost, getUser, getHashtagsRanking } from "../services/axios";
+import { getPosts, setPost, getUser, getHashtagsRanking } from "../services/axios";
 import useForm from "../hooks/useForm";
 import Header from "../common/Header";
 import Feed from "../common/Feed";
@@ -59,12 +59,6 @@ const Timeline = () => {
       })
   }
 
-  const handleDelete = (id) => {    
-    deletePost({ id })
-      .then(() => updatePosts())
-      .catch(() => alert("An error occured. Your post could not be deleted"))
-  }
-
   return (
     <>
         <Header />
@@ -75,20 +69,28 @@ const Timeline = () => {
                 <img src={user.pictureUrl} alt={user.name} />
                 <form onSubmit={handleSubmit}>
                   <h3>What are you going to share today?</h3>
-                  <input 
-                    type="text" 
-                    name="link" 
-                    value={form.link}
-                    onChange={handleForm} 
-                    placeholder="http://..." 
-                  />
-                  <input 
-                    type="text" 
-                    name="body" 
-                    value={form.body}
-                    onChange={handleForm} 
-                    placeholder="Awesome article about #javascript" 
-                  />
+                  {isDisabled
+                    ? <>
+                      <input type="text" value={form.link} disabled />
+                      <input type="text" value={form.body} disabled />
+                    </>
+                    : <>
+                        <input 
+                          type="text" 
+                          name="link" 
+                          value={form.link}
+                          onChange={handleForm} 
+                          placeholder="http://..." 
+                        />
+                        <input 
+                          type="text" 
+                          name="body" 
+                          value={form.body}
+                          onChange={handleForm} 
+                          placeholder="Awesome article about #javascript" 
+                        />
+                    </>
+                  }
                   <button type="submit">{ isDisabled ? "Publishing..." : "Publish" }</button>
                 </form>
               </NewPostWrapper>
@@ -98,7 +100,7 @@ const Timeline = () => {
                   key={index} 
                   post={post}
                   userId={user.userId}
-                  handleDelete={() => handleDelete(post.id)}
+                  refresh={updatePosts}
                 />
               ))}
             </Feed>

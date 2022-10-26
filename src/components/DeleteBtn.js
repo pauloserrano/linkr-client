@@ -1,9 +1,23 @@
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa"
+import { deletePost } from "../services/axios";
 import Modal from "../common/Modal"
 
-const DeleteBtn = ({ handler }) => {
+const DeleteBtn = ({ postId, refresh }) => {
     const [isModalOpen, SetIsModalOpen] = useState(false)
+
+    const handleDelete = async (id) => {
+      try {
+        await deletePost({ id: postId })
+        refresh()
+        
+      } catch (error) {
+        console.error(error)
+        alert("An error occured. Your post could not be deleted")
+      }
+
+      SetIsModalOpen(false)
+    }
 
   return (
     <>
@@ -16,7 +30,7 @@ const DeleteBtn = ({ handler }) => {
             dialog="Are you sure you want to delete this post?"
             cancelBtn="No, go back" 
             confirmBtn="Yes, delete it"
-            onSubmit={handler}
+            onSubmit={handleDelete}
         />
     </>
   )
