@@ -16,12 +16,18 @@ const endSession = async () => {
     return api.patch('/logout', {}, { headers: {
         Authorization: `Bearer ${localStorage.getItem("refreshToken")}`
     }})
-}
+};
 
 const getUser = async () => {
     return api.get('/user', { headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
     }})
+};
+
+const getUsers = async namePart => {
+    return api.get(`/users/?namePart=${namePart}`, { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }});
 };
 
 const getPosts = async () => {
@@ -37,4 +43,4 @@ const setPost = async ({ link, body }) => {
     )
 }
 
-export { login, signUp, endSession, getUser, getPosts, setPost };
+export { login, signUp, endSession, getUser, getUsers, getPosts, setPost };

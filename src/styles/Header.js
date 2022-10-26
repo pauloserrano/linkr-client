@@ -3,6 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.header`
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
     height: min(70px, 20vh);
     position: relative;

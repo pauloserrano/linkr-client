@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { FeedWrapper, PostWrapper } from "../styles";
 
 const Feed = ({ children, ...otherProps }) => {
@@ -13,13 +14,14 @@ Feed.Title = ({ children, ...otherProps }) => {
 }
 
 Feed.Post = ({ post, ...otherProps}) => {
-  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage } = post
-  
+  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage, userId } = post
+
   return (
-    <PostWrapper {...otherProps}>
-        <img src={pictureUrl} alt={name} />
+
+      <PostWrapper {...otherProps} >
+        <Link to={ "/user/" + userId } ><img src={pictureUrl} alt={name} /></Link>
         <div className="content">
-            <h3>{name}</h3>
+            <h3><Link to={ "/user/" + userId } >{name}</Link></h3>
             {body && <p>{body}</p>}
             <a href={link} target="_blank" rel="noopener noreferrer">
               <p className="title">{metaTitle}</p>
@@ -28,7 +30,7 @@ Feed.Post = ({ post, ...otherProps}) => {
               <img src={metaImage} alt={metaTitle} />
             </a>
         </div>
-    </PostWrapper>
+    </PostWrapper>    
   )
 }
 

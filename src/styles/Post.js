@@ -9,7 +9,7 @@ const Wrapper = styled.section`
     border-radius: 1rem;
     background-color: #171717;
 
-    > img{
+    a img{
         width: 50px;
         border-radius: 50%;
     }
@@ -23,9 +23,14 @@ const Wrapper = styled.section`
     
         h3{
             font-size: 1.25rem;
+
+            > a {
+                text-decoration: none;
+                color: white;
+            }
         }
     
-        a{
+        > a{
             position: relative;
             display: flex;
             justify-content: center;
