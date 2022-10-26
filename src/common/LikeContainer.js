@@ -8,11 +8,8 @@ export default function LikeContainer ({postId}){
 
   const [isLiked, setIsLiked] = useState(false)
   const [likeAmount, setLikeAmount] = useState(0)
-<<<<<<< HEAD
-=======
   const [likeInfo, setLikeInfo] = useState(false)
   const [whoLike, setWhoLike] = useState([])
->>>>>>> main
 
   useEffect(updateLikes,[isLiked])
 
