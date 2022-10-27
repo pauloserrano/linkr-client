@@ -13,6 +13,8 @@ const Wrapper = styled.section`
 
     > img{
         width: 50px;
+        height: 50px;
+        object-fit: cover;
         border-radius: 50%;
     }
 
@@ -31,6 +33,7 @@ const Wrapper = styled.section`
             padding: 0.5em;
             border: none;
             margin-bottom: 0.5rem;
+            ${props => props.isDisabled ? 'pointer-events: none;' : ''}
 
             ::placeholder{
                 font-family: 'Lato', sans-serif;
@@ -45,6 +48,7 @@ const Wrapper = styled.section`
             border: none;
             border-radius: 5px;
             background-color: ${props => props.isDisabled ? '#6AA8F9' : '#1877F2'};
+            ${props => props.isDisabled ? 'pointer-events: none;' : ''}
             color: #FFF;
         }
     }

@@ -8,18 +8,61 @@ const Wrapper = styled.section`
     padding: 1rem;
     border-radius: 1rem;
     background-color: #171717;
+    position: relative;
+    z-index: 1;
 
-    a img{
-        width: 50px;
-        border-radius: 50%;
+
+    .btn-delete, .btn-edit, .btn-comment{
+        height: fit-content;
+        color: white;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
     }
 
-    .content{
-
-        h3, > p{
-            margin-bottom: 0.5rem
-        }
+    .btn-comment{
+        margin: 5px 0;
+    }
     
+    .btn-container{
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+
+    aside{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .user-picture{
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .like-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    p{
+        font-size: 0.75rem;
+        color: #FFF;
+    }
+
+    main{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        h3, p{
+            margin-bottom: 0.75rem;
+        }
+
         h3{
             font-size: 1.25rem;
 
@@ -28,8 +71,28 @@ const Wrapper = styled.section`
                 color: white;
             }
         }
+
+        p{
+            font-size: 1rem;
+            color: #B7B7B7;
+        }
+
+        form{
+            width: 100%;
+            margin-bottom: 0.75rem;
+
+            input{
+                width: 100%;
+                height: fit-content;
+                padding: 0.5em;
+                border: none;
+                border-radius: 5px;
+                font-size: 1rem;
+            }
+        }
     
-        > a{
+
+           > a{
             position: relative;
             display: flex;
             justify-content: center;
@@ -84,8 +147,6 @@ const Wrapper = styled.section`
             }
         }
     }
-
-
 `
 
 export default Wrapper

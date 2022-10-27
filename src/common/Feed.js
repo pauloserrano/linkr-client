@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { FeedWrapper, PostWrapper } from "../styles";
+import { FeedWrapper } from "../styles";
+import Post from "../components/Post";
 
 const Feed = ({ children, ...otherProps }) => {
   return (
@@ -13,24 +14,14 @@ Feed.Title = ({ children, ...otherProps }) => {
     return (<h2 {...otherProps}>{children}</h2>)
 }
 
-Feed.Post = ({ post, ...otherProps}) => {
-  const { pictureUrl, name, link, body, metaTitle, metaDescription, metaImage, userId } = post
-
+Feed.Post = ({ post, userId, handleDelete, ...otherProps }) => {
   return (
-
-      <PostWrapper {...otherProps} >
-        <Link to={ "/user/" + userId } ><img src={pictureUrl} alt={name} /></Link>
-        <div className="content">
-            <h3><Link to={ "/user/" + userId } >{name}</Link></h3>
-            {body && <p>{body}</p>}
-            <a href={link} target="_blank" rel="noopener noreferrer">
-              <p className="title">{metaTitle}</p>
-              {metaDescription && <p className="description">{metaDescription}</p>}
-              <p className="link">{link}</p>
-              <img src={metaImage} alt={metaTitle} />
-            </a>
-        </div>
-    </PostWrapper>    
+    <Post 
+      post={post}
+      userId={userId}
+      handleDelete={() => handleDelete(post.id)}
+      {...otherProps}
+    />
   )
 }
 

@@ -4,6 +4,8 @@ const Wrapper = styled.section`
     display: flex;
     align-items: center;
     flex-direction: column;
+    width: min(100%, 600px);
+    margin-right: 1.5rem;
 
     h2{
         font-family: 'Oswald', sans-serif;

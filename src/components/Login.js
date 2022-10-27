@@ -6,11 +6,14 @@ import Logo from "../common/Logo.js";
 import { FormWrapper } from "../styles/FormWrapper.js";
 import { Link, useNavigate } from "react-router-dom";
 import * as api from "../services/axios.js";
+import useGlobalContext from "../hooks/useGlobalContext.js";
 
 
 const Login = () => {
     // Logic
     const navigate = useNavigate();
+
+    const { setUser } = useGlobalContext()
 
     const [form, setForm] = useState(
         {
@@ -36,7 +39,7 @@ const Login = () => {
             const signin = await api.login(form);
             localStorage.setItem("accessToken", signin.data.token);
             localStorage.setItem("refreshToken", signin.data.refreshToken);
-
+            setUser(signin.data.user)
             navigate("/timeline");
         } catch (error) {
             setButtonBlocked(false);
