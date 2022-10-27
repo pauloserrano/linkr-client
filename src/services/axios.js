@@ -35,15 +35,29 @@ const getPosts = async () => {
 }
 
 const getLikes = async (postId) => {
-    return api.get(`/likeamount/${postId}`)
+    return api.get(`/likeamount/${postId}`,
+    { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }}
+    )
 }
 
 const insertLike = async (postId) => {
-    return api.post(`/like/${postId}`)
+    const body = {}
+    return api.post(`/like/${postId}`,
+    body,
+    { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }}
+    )
 }
 
 const deleteLike = async (postId) => {
-    return api.delete(`/like/${postId}`)
+    return api.delete(`/like/${postId}`,
+    { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }}
+    )
 }
 
 const getHashtagsRanking = async () => {
