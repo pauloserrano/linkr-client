@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react"
-import { PostWrapper, CommentsWrapper } from "../styles"
+import { BiRepost } from 'react-icons/bi'
+import { PostWrapper, CommentsWrapper, RepostTag } from "../styles"
 import LikeContainer from "../common/LikeContainer"
 import EditBody from "../components/EditBody"
 import EditBtn from "../components/EditBtn"
@@ -21,14 +22,21 @@ const Post = ({ post, userId, refresh }) => {
       updateComments()
     }, [])
 
-    const updateComments = () => {
-      getComments({ id: post.id })
-        .then(({ data }) => setComments(data))
-        .catch(console.error)
+    const updateComments = async () => {
+      try {
+        const { data : comments } = await getComments({ id: post.id })
+        setComments(comments)
+
+      } catch (error) {
+        console.error(error)
+      }
+
+      refresh()
     }
     
     return (
-      <>
+      <article>
+      {post.isRepost && <Post.RepostTag name={post.name} />}
       <PostWrapper>
           <aside>
             <img className="user-picture" src={pictureUrl} alt={name} />
@@ -65,8 +73,9 @@ const Post = ({ post, userId, refresh }) => {
                   postRef={postRef}
                 />
                 <DeleteBtn 
-                  postId={post.id}
+                  post={post}
                   refresh={refresh} 
+                  isRepost={post.isRepost}
                 />
               </div>
             }
@@ -88,11 +97,18 @@ const Post = ({ post, userId, refresh }) => {
               </div>
             ))
         }
-        <NewComment postId={post.id} refresh={updateComments} />
+        <NewComment postId={post.id} refresh={() => updateComments()} />
       </CommentsWrapper>
-      </>
+      </article>
     )
   }
 
+Post.RepostTag = ({ name }) => {
+  return (
+    <RepostTag>
+      <BiRepost size={16} /> <p className="repost-body">Reposted by <span className="username">{name}</span></p>
+    </RepostTag>
+  )
+}
 
 export default Post

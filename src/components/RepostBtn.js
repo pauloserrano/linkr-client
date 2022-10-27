@@ -3,8 +3,9 @@ import { BiRepost } from 'react-icons/bi'
 import { repostPost } from '../services/axios'  
 import Modal from '../common/Modal'
 
-const RepostBtn = ({ amount, postId, refresh, ...otherProps }) => {
+const RepostBtn = ({ amount, postId, refresh }) => {
     const [isModalOpen, SetIsModalOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleRepost = async (id) => {
       try {
@@ -15,7 +16,7 @@ const RepostBtn = ({ amount, postId, refresh, ...otherProps }) => {
         console.error(error)
         alert("An error occured")
       }
-
+      setIsLoading(false)
       SetIsModalOpen(false)
     }
 
@@ -32,6 +33,8 @@ const RepostBtn = ({ amount, postId, refresh, ...otherProps }) => {
             cancelBtn="No, cancel"
             confirmBtn="Yes, share it!"
             onSubmit={handleRepost}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
         />
     </>
   )

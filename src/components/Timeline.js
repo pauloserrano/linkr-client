@@ -26,19 +26,18 @@ const Timeline = () => {
     .catch(console.error) 
   } 
 
-  const updatePosts = () => {
-    getHashtagsRanking()
-    .then(({ data }) => setHashtagList(data))
-    .catch(err => {
-      console.error(err)
-    })
+  const updatePosts = async () => {
+    try {
+      const { data: hashtags } = await getHashtagsRanking()
+      const { data: posts } = await getPosts()
 
-    getPosts()
-    .then(({ data }) => setPosts(data))
-    .catch(err => {
-      console.error(err)
-      setError(true)
-    })
+      setHashtagList(hashtags)
+      setPosts(posts)
+      
+    } catch (error) {
+      setError(error)
+      console.error(error)
+    }
   }
 
   const resetForm = () => setForm({ link: "", body: "" })
@@ -95,9 +94,9 @@ const Timeline = () => {
                 </form>
               </NewPostWrapper>
               <Feed.Status loading={posts} error={error} />
-              {posts?.length > 0 && posts.map((post, index) => (
+              {posts?.length > 0 && posts.map((post) => (
                 <Feed.Post 
-                  key={index} 
+                  key={`${post.id}${post.repostId}`} 
                   post={post}
                   userId={user.userId}
                   refresh={updatePosts}

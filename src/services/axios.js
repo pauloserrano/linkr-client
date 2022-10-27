@@ -67,6 +67,14 @@ const deletePost = async ({ id }) => {
     )
 }
 
+const deleteRepost = async ({ id }) => {
+    return api.delete(`/repost/${id}`,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
 const updatePost = async ({ id, body }) => {
     return api.patch(`/post/${id}`,
         { body },
@@ -120,5 +128,6 @@ export {
     updatePost,
     getComments,
     setComment,
-    repostPost
+    repostPost,
+    deleteRepost
 };
