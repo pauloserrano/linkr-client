@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { BiRepost } from 'react-icons/bi'
 import { PostWrapper, CommentsWrapper, RepostTag } from "../styles"
 import LikeContainer from "../common/LikeContainer"
@@ -39,7 +40,9 @@ const Post = ({ post, userId, refresh }) => {
       {post.isRepost && <Post.RepostTag name={post.name} />}
       <PostWrapper>
           <aside>
+          <Link to={ "/user/" + userId } >
             <img className="user-picture" src={pictureUrl} alt={name} />
+          </Link>
             <LikeContainer postId={id}/>
             <CommentBtn 
               amount={comments.length}
@@ -51,9 +54,9 @@ const Post = ({ post, userId, refresh }) => {
               refresh={refresh}
             />
           </aside>
-  
+
           <main ref={postRef}>
-            <h3 className="username">{name}</h3>
+            <h3 className="username"><Link to={ "/user/" + userId } >{name}</Link></h3>
             <EditBody
               post={post}
               isEditable={isEditable}

@@ -16,12 +16,18 @@ const endSession = async () => {
     return api.patch('/logout', {}, { headers: {
         Authorization: `Bearer ${localStorage.getItem("refreshToken")}`
     }})
-}
+};
 
 const getUser = async () => {
     return api.get('/user', { headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
     }})
+};
+
+const getUsers = async namePart => {
+    return api.get(`/users/?namePart=${namePart}`, { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }});
 };
 
 const getPosts = async () => {
@@ -33,15 +39,29 @@ const getPosts = async () => {
 }
 
 const getLikes = async (postId) => {
-    return api.get(`/likeamount/${postId}`)
+    return api.get(`/likeamount/${postId}`,
+    { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }}
+    )
 }
 
 const insertLike = async (postId) => {
-    return api.post(`/like/${postId}`)
+    const body = {}
+    return api.post(`/like/${postId}`,
+    body,
+    { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }}
+    )
 }
 
 const deleteLike = async (postId) => {
-    return api.delete(`/like/${postId}`)
+    return api.delete(`/like/${postId}`,
+    { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }}
+    )
 }
 
 const getHashtagsRanking = async () => {
@@ -52,6 +72,31 @@ const getPostsHashtag = async (hashtag) => {
 }
 const getPostsUserId = async (userId) => {
     return api.get(`/user/${userId}`)
+}
+
+const followById = async (followedId) => {
+    return api.get(`/follows/${followedId}`,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+const insertFollow = async (body) => {
+    return api.post('/follow', 
+        body,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+const deleteFollow = async (followedId) => {
+    return api.delete(`/follow/${followedId}`, 
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
 }
 
 const setPost = async ({ link, body }) => {
@@ -118,7 +163,9 @@ const repostPost = async ({ id }) => {
 export { 
     login, 
     signUp, 
-    endSession, 
+    endSession,
+    getUser,
+    getUsers,
     getPosts, 
     setPost, 
     deletePost, 
@@ -126,10 +173,12 @@ export {
     getPostsHashtag, 
     getLikes, 
     insertLike, 
-    deleteLike, 
-    getUser,
+    deleteLike,
     getPostsUserId,
     updatePost,
+    insertFollow,
+    followById,
+    deleteFollow,
     getComments,
     setComment,
     repostPost,

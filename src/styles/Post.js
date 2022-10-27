@@ -64,6 +64,11 @@ const Wrapper = styled.section`
 
         h3{
             font-size: 1.25rem;
+
+            > a {
+                text-decoration: none;
+                color: white;
+            }
         }
 
         p{
@@ -86,7 +91,7 @@ const Wrapper = styled.section`
         }
     
 
-        a{
+           > a{
             position: relative;
             display: flex;
             justify-content: center;
@@ -115,6 +120,10 @@ const Wrapper = styled.section`
             }
 
             .link{
+                display: inline-block;
+                width: 30rem; // links with big lenghts was breaking layout
+                overflow-wrap: break-word;
+
                 font-weight: bold;
             }
     

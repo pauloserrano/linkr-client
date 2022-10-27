@@ -1,5 +1,6 @@
-import Post from "../components/Post";
+import { Link } from "react-router-dom";
 import { FeedWrapper } from "../styles";
+import Post from "../components/Post";
 
 const Feed = ({ children, ...otherProps }) => {
   return (
