@@ -25,7 +25,11 @@ const getUser = async () => {
 };
 
 const getPosts = async () => {
-    return api.get('/timeline')
+    return api.get('/timeline',
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
 }
 
 const getLikes = async (postId) => {

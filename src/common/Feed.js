@@ -28,7 +28,7 @@ Feed.Status = ({ loading, error }) => {
   return (
     <>
       {!loading && !error && 'Loading'}
-      {loading?.length === 0 && 'No posts yet'}
+      {loading?.length === 0 && 'No posts found from your friends'}
       {error && 'An error occured while trying to fetch the posts, please refresh the page'}
     </>
   )

@@ -16,14 +16,18 @@ const Timeline = () => {
   const [form, handleForm, setForm] = useForm({ link: "", body: "" })
   
   useEffect(() => {
-    updatePosts()
-    fillUser()
+    getter()
   }, [])
 
-  const fillUser = () => {
-    getUser()
-    .then(({ data: { name, pictureUrl, id: userId} }) => setUser({ name, pictureUrl, userId }))
-    .catch(console.error) 
+  const getter = async () => {
+    try {
+      const { data: { name, pictureUrl, id: userId }} = await getUser()
+      setUser({ name, pictureUrl, userId })
+      updatePosts()
+      
+    } catch (error) {
+      console.error(error)
+    }
   } 
 
   const updatePosts = async () => {
