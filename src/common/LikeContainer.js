@@ -6,32 +6,37 @@ import { AiOutlineHeart as EmptyHeart } from "react-icons/ai"
 
 export default function LikeContainer ({postId}){
 
-  const [isLiked, setIsLiked] = useState(false)
-  const [likeAmount, setLikeAmount] = useState(0)
-  const [likeInfo, setLikeInfo] = useState(false)
   const [whoLike, setWhoLike] = useState([])
+  const [likeInfo, setLikeInfo] = useState(false)
+  const [likeResponse, setLikeResponse] = useState()
+  const [awaitResponse, setAwaitResponse] = useState(false)
+  
+  useEffect(updateLikes,[])
 
-  useEffect(updateLikes,[isLiked])
   function likeClickBotton(){
 
-    if (isLiked){
+    setAwaitResponse(true)
 
+    if (likeResponse?.isLiked){
       deleteLike(postId)
-
+      .then((res) => {
+        updateLikes()
+        setAwaitResponse(false)
+      })
     } else {
-
       insertLike(postId)
-
+      .then((res) => {
+        updateLikes()
+        setAwaitResponse(false)
+      })
     }
-    setIsLiked(!isLiked)
   }
 
   function updateLikes(){
     getLikes(postId)
       .then((res) => {
-        setLikeAmount(res.data?.likeAmount)
-        setIsLiked(res.data?.isLiked)
         setWhoLike(res.data?.whoLiked)
+        setLikeResponse(res.data)
       })
       .catch(err => {
         console.error(err)
@@ -39,17 +44,21 @@ export default function LikeContainer ({postId}){
   }
 
   return(
-    <ContainerLikes onClick={() => likeClickBotton()} onMouseEnter={() => setLikeInfo(true)} onMouseLeave={() => setLikeInfo(false)}>
+    <ContainerLikes onClick={() => likeClickBotton()} onMouseEnter={() => setLikeInfo(true)} onMouseLeave={() => setLikeInfo(false)} awaitResponse={awaitResponse}>
       <LikeInfoContainer likeStatus={likeInfo}>
         {(whoLike !== undefined) ? (whoLike.join(", ")):("")}
       </LikeInfoContainer>
-      <div> {(isLiked ? (<FilledHeartStyled/> ):(<EmptyHeartStyled/> ))}</div>
-      <span>{likeAmount} likes</span>
+      <div> {(likeResponse?.isLiked ? (<FilledHeartStyled/> ):(<EmptyHeartStyled/> ))}</div>
+      <span>{likeResponse?.likeAmount} likes</span>
     </ContainerLikes>
   )
 }
 
 const ContainerLikes = styled.div`
+
+  pointer-events: ${(props) => props.awaitResponse ? ("none"):("auto")};
+  cursor: pointer;
+  
   display:flex;
   flex-direction:column;
   align-items:center;
