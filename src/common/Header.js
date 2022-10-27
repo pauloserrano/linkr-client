@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineDown as DropIconDown } from "react-icons/ai"
 import { AiOutlineUp as DropIconUp } from "react-icons/ai"
 import useGlobalContext from "../hooks/useGlobalContext"
 import { HeaderWrapper as Wrapper } from "../styles"
 import { endSession } from "../services/axios";
-import { useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar.js";
 
 const Header = () => {
     const { user } = useGlobalContext()
@@ -26,21 +27,21 @@ const Header = () => {
   return (
     <Wrapper>
         <h1>Linkr</h1>
+        <SearchBar />
         <div className="user-container">
               <button onClick={() => setMenu(!menu)}>
                   { menu ? <DropIconUp size={24} /> : <DropIconDown size={24} /> }
               </button>
               <img src={user.pictureUrl} alt={user.name} />   
         </div>
-        
-          {
-            (menu) ?
-            <div className="header-menu" onClick={ logout }> 
-              <h4>Logout</h4>
-            </div>
-            : 
-            <></>
-          }        
+        {
+          (menu) ?
+          <div className="header-menu" onClick={ logout }> 
+            <h4>Logout</h4>
+          </div>
+          : 
+          <></>
+        }        
     </Wrapper>
   )
 }

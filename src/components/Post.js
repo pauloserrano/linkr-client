@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { PostWrapper, CommentsWrapper } from "../styles"
 import LikeContainer from "../common/LikeContainer"
 import EditBody from "../components/EditBody"
@@ -30,16 +31,18 @@ const Post = ({ post, userId, refresh }) => {
       <>
       <PostWrapper>
           <aside>
+          <Link to={ "/user/" + userId } >
             <img className="user-picture" src={pictureUrl} alt={name} />
+          </Link>
             <LikeContainer postId={id}/>
             <CommentBtn 
               amount={comments.length}
               onClick={() => setShowComments(prev => !prev)}
             />
           </aside>
-  
+
           <main ref={postRef}>
-            <h3 className="username">{name}</h3>
+            <h3 className="username"><Link to={ "/user/" + userId } >{name}</Link></h3>
             <EditBody
               post={post}
               isEditable={isEditable}

@@ -66,7 +66,7 @@ const Timeline = () => {
             <Feed>
               <Feed.Title>timeline</Feed.Title>
               <NewPostWrapper isDisabled={isDisabled}>
-                <img src={user.pictureUrl} alt={user.name} />
+                <img src={user?.pictureUrl} alt={user.name} />
                 <form onSubmit={handleSubmit}>
                   <h3>What are you going to share today?</h3>
                   {isDisabled
