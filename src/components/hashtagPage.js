@@ -7,6 +7,7 @@ import Header from "../common/Header";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
 import Feed from "../common/Feed";
 import { getPostsHashtag } from "../services/axios";
+import useGlobalContext from "../hooks/useGlobalContext";
 
 
 
@@ -16,6 +17,7 @@ export default function HashtagPage(){
     const {hashtag} = useParams()
     const [posts, setPosts] = useState()
     const [error, setError] = useState(false)
+    const { follows } = useGlobalContext()
 
     const updatePosts = () => {
         getPostsHashtag (hashtag)
@@ -37,7 +39,7 @@ export default function HashtagPage(){
 
                 <Feed>
                 <Feed.Title># {hashtag}</Feed.Title>
-                <Feed.Status loading={posts} error={error} />
+                <Feed.Status follows={follows} loading={posts} error={error} />
                 {posts?.length > 0 && posts.map((post, index) => (
                     <Feed.Post 
                     key={index} 

@@ -7,6 +7,7 @@ import { TimelineWrapper } from "../styles";
 import Feed from "../common/Feed";
 import { getPostsUserId, getHashtagsRanking, insertFollow, getUser, followById, deleteFollow } from "../services/axios";
 import HashtagTrending from "../common/hashtagsTrending";
+import useGlobalContext from "../hooks/useGlobalContext";
 
 export default function UserPage(){
         
@@ -20,6 +21,7 @@ export default function UserPage(){
     const [error, setError] = useState(false)
 
     const [awaitResponse, setAwaitResponse] = useState(false)
+    const { follows } = useGlobalContext()
 
     console.log(user)
 
@@ -101,7 +103,7 @@ export default function UserPage(){
                     </Feed.Title>
                 </UserPageTittle>
                 
-                <Feed.Status loading={user?.postArray} error={error} />
+                <Feed.Status follows={follows} loading={user?.postArray} error={error} />
                 {user?.postArray?.length > 0 && user?.postArray.map((post, index) => (
                     <Feed.Post 
                     key={index} 
