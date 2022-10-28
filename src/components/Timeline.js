@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useInterval from 'use-interval'
 import { TimelineWrapper, NewPostWrapper } from "../styles";
 import { getPosts, setPost, getUser, getHashtagsRanking } from "../services/axios";
 import useForm from "../hooks/useForm";
@@ -14,11 +15,23 @@ const Timeline = () => {
   const [isDisabled, setIsDisabled] = useState(false)
   const [hashtagList, setHashtagList] = useState([])
   const [form, handleForm, setForm] = useForm({ link: "", body: "" })
-  
+  const [newPosts, setNewPosts] = useState([0, 1])
   useEffect(() => {
     updatePosts()
     fillUser()
   }, [])
+
+  useInterval(() => {
+    console.log("update!")
+    setNewPosts([1, 2, 3])
+    getPosts()
+    .then(({ data }) => setNewPosts(data))
+  }, 15000)
+
+  const renderNewPosts = () => {
+    setPosts([...newPosts, ...posts]);
+    setNewPosts([]);
+  }
 
   const fillUser = () => {
     getUser()
@@ -94,6 +107,14 @@ const Timeline = () => {
                   <button type="submit">{ isDisabled ? "Publishing..." : "Publish" }</button>
                 </form>
               </NewPostWrapper>
+                <div className="update-posts">
+                {
+                  ( newPosts?.length - posts?.length > 0 ) 
+                  ? <button onClick={renderNewPosts} > { newPosts.length - posts.length } new posts</button>
+                  : <></>  
+                }
+                </div>               
+
               <Feed.Status loading={posts} error={error} />
               {posts?.length > 0 && posts.map((post) => (
                 <Feed.Post 
