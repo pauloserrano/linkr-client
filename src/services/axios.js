@@ -18,6 +18,13 @@ const endSession = async () => {
     }})
 };
 
+const getAllUsers = async () => {
+    return api.get(`/users/all`, 
+    { headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }});
+}
+
 const getUser = async () => {
     return api.get('/user', { headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -191,5 +198,6 @@ export {
     setComment,
     repostPost,
     deleteRepost,
-    getAllFollowed
+    getAllFollowed,
+    getAllUsers
 };

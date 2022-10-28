@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 
 const SearchResult = ({ user, index, isFollowed }) => {
-    const { username, pictureUrl } = user;
+    const { name, pictureUrl } = user;
     
     return (
             <div className="result" key={index} >
                 <img src={pictureUrl} />
-                <span spellcheck="false" >{username}</span>
+                <span spellcheck="false" >{name}</span>
                 <FollowStatus>{ (isFollowed)?("• following"):("")}</FollowStatus>
             </div>
     )

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiMagnifyingGlass as Magnifier } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { DebounceInput } from "react-debounce-input";
 
 import SearchBarWrapper from "../styles/SearchBarWrapper.js";
-import { getUsers } from "../services/axios";
+import { getUsers, getAllUsers } from "../services/axios";
 import SearchResult from "./SearchResult.js";
+
+import useGlobalContext from "../hooks/useGlobalContext"
 
 
 const SearchBar = () => {
@@ -13,39 +15,57 @@ const SearchBar = () => {
     const [results, setResults] = useState([]);
     const [focused, setFocused] = useState(true);
 
-    const [test, setTest] = useState([0,1,2])
+    const { follows } = useGlobalContext()
+    const [allUsers, setAllUsers] = useState()
 
-    const searchUsers = async () => { 
-        getUsers(search)
-        .then(response => {
-            setResults([...response.data.profiles])
+    /*
+    const {follows} = useGlobalContext()
+    console.log("follows")
+    console.log(results)
+    */
+
+    useEffect(()=>{
+
+        getAllUsers()
+        .then(res => {
+            setAllUsers(res.data)
+            console.log("res.data")
+            console.log(res.data)
         })
-        .catch(e => console.log(e))
-        console.log(results) 
-    }
 
-    const autoSearch = keyDown => {
-        setSearch(keyDown.target.value);
-        searchUsers();
-        console.log(search)
+    }, [])
+
+    useEffect(()=>{
+
+        if (search !== "") {
+
+            setResults(allUsers?.filter( (e) => e.name.toLowerCase().includes(search.toLowerCase())))
+        }
+
+    }, [search])
+
+    function verifyFollow(id){
+        if(follows?.rows.filter( e => e?.followedId === id).length !== 0){
+            return true
+        } else return false
     }
 
     return (
     <>
-        <SearchBarWrapper onFocus={ () => setFocused(true) } contentEditable onBlur={ () => setFocused(false) } >
+        <SearchBarWrapper onFocus={ () => setFocused(true) } /*onBlur={ () => setFocused(false) } */>
+
             <DebounceInput 
-                    minLength={3}
-                    debounceTimeout={300}
-                    value={ search }
-                    onChange={ e => autoSearch(e) } 
-                    placeholder="Search for people"
-                     >
+                minLength={3}
+                debounceTimeout={300}
+                onChange={ e => setSearch(e.target.value) } 
+                placeholder="Search for people"
+            >
             </DebounceInput>
-            <div className="icon" onClick={ () => setFocused(true) } ><Magnifier onClick={searchUsers} color="#cfcfcf" /></div>
+            <div className="icon" onClick={ () => {setFocused(true)} } ><Magnifier color="#cfcfcf" /></div>
             <div className="search-results" >
                 {
                     (results?.length > 0 && focused) 
-                    ? results.map((profile, i) => { return <Link to={ "/user/" + profile.userId }><SearchResult key={i} user={profile} index={i} isFollowed={profile?.isFollowed}/></Link> })
+                    ? results.map((profile, i) => { return <Link to={ "/user/" + profile.id }><SearchResult key={i} user={profile} index={i} isFollowed={verifyFollow(profile.id)}/></Link> })
                     : <></>
                 }
             </div>
