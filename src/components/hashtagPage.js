@@ -9,15 +9,12 @@ import Feed from "../common/Feed";
 import { getPostsHashtag, getUser } from "../services/axios";
 import useGlobalContext from "../hooks/useGlobalContext";
 
-
-
-
 export default function HashtagPage(){
         
     const {hashtag} = useParams()
     const [posts, setPosts] = useState()
     const [error, setError] = useState(false)
-    const { user, setUser } = useGlobalContext()
+    const { user, setUser, follows } = useGlobalContext()
 
 
     const updatePosts = () => {
@@ -42,15 +39,13 @@ export default function HashtagPage(){
     useEffect(() => updatePosts(), [])
 
     return(
-
-
         <>
             <Header />
             <TimelineWrapper>
 
                 <Feed>
                 <Feed.Title># {hashtag}</Feed.Title>
-                <Feed.Status loading={posts} error={error} />
+                <Feed.Status follows={follows} loading={posts} error={error} />
                 {posts?.length > 0 && posts.map((post, index) => (
                     <Feed.Post 
                     key={index} 

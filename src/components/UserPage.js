@@ -18,7 +18,6 @@ export default function UserPage(){
     const [forceRefresh, setForceRefresh] = useState(false)
     const { follows, setFollows } = useGlobalContext()
 
-
     const [follow, setFollow] = useState(false)
     const [hashtagList, setHashtagList] = useState([])
     const [error, setError] = useState(false)
@@ -116,7 +115,7 @@ export default function UserPage(){
                     </Feed.Title>
                 </UserPageTittle>
                 
-                <Feed.Status loading={user?.postArray} error={error} />
+                <Feed.Status follows={follows} loading={user?.postArray} error={error} />
                 {user?.postArray?.length > 0 && user?.postArray.map((post, index) => (
                     <Feed.Post 
                     key={index} 

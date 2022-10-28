@@ -42,7 +42,7 @@ const Post = ({ post, userId, refresh }) => {
       {post.isRepost && <Post.RepostTag name={post.name === user.name ? 'you' : post.name} />}
       <PostWrapper isRepost={post.isRepost}>
           <aside>
-          <Link to={ "/user/" + userId } >
+          <Link to={ "/user/" + post.userId } >
             <img className="user-picture" src={pictureUrl} alt={name} />
           </Link>
             <LikeContainer postId={id}/>
@@ -58,7 +58,7 @@ const Post = ({ post, userId, refresh }) => {
           </aside>
 
           <main ref={postRef}>
-            <h3 className="username"><Link to={ "/user/" + userId } >{name}</Link></h3>
+            <h3 className="username"><Link to={ "/user/" + post.userId } >{name}</Link></h3>
             <EditBody
               post={post}
               isEditable={isEditable}

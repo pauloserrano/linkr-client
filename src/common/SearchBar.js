@@ -44,12 +44,12 @@ const SearchBar = () => {
 
         if (search !== "") {
 
-            setResults(teste(follows, allUsers?.filter( (e) => e.name.toLowerCase().includes(search.toLowerCase()))))
+            setResults(priorityFormat(follows, allUsers?.filter( (e) => e.name.toLowerCase().includes(search.toLowerCase()))))
         }
 
     }, [search])
 
-    function teste(follows, arr){
+    function priorityFormat(follows, arr){
 
         let indiceFollowed
         let aux
@@ -57,7 +57,7 @@ const SearchBar = () => {
         for (let i = 0; i < arr.length; i++){
             indiceFollowed = i
             for (let z = i + 1; z < arr.length; z++){
-                if (follows?.rows.filter( e => e?.followedId === arr[z].id).length !== 0 && indiceFollowed === i){
+                if (follows?.filter( e => e === arr[z].id).length !== 0 && indiceFollowed === i){
                     indiceFollowed = z
                 }
             }
@@ -69,8 +69,8 @@ const SearchBar = () => {
     }
 
     function verifyFollow(id){
-  
-        if(follows?.rows.filter( e => e?.followedId === id).length !== 0){
+        console.log(follows)
+        if(follows?.filter( e => e === id).length !== 0){
             return true
         } else return false
     }  
