@@ -6,6 +6,7 @@ import FeedWrapper from "./Feed"
 import NewPostWrapper from "./NewPost"
 import ModalWrapper from "./Modal"
 import CommentsWrapper from "./Comments"
+import RepostTag from "./RepostTag"
 
 export { 
     GlobalStyle, 
@@ -15,5 +16,6 @@ export {
     FeedWrapper, 
     NewPostWrapper,
     ModalWrapper,
-    CommentsWrapper
+    CommentsWrapper,
+    RepostTag
 }

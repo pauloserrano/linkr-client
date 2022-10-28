@@ -11,13 +11,17 @@ const Wrapper = styled.section`
     position: relative;
     z-index: 1;
 
-
-    .btn-delete, .btn-edit, .btn-comment{
+    .btn-delete, .btn-edit, .btn-comment, .btn-repost{
         height: fit-content;
         color: white;
         border: none;
         background-color: transparent;
         cursor: pointer;
+        
+    }
+
+    .btn-repost{
+        ${props => props.isRepost ? 'pointer-events: none;' : ''}
     }
 
     .btn-comment{
@@ -56,6 +60,7 @@ const Wrapper = styled.section`
 
     main{
         display: flex;
+        justify-content: space-between;
         flex-direction: column;
         width: 100%;
 
@@ -122,9 +127,8 @@ const Wrapper = styled.section`
 
             .link{
                 display: inline-block;
-                width: 30rem; // links with big lenghts was breaking layout
-                overflow-wrap: break-word;
-
+                max-height: 3.1em;
+                overflow: hidden;
                 font-weight: bold;
             }
     

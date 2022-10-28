@@ -5,7 +5,7 @@ import { AuthPagesWrapper, Left } from "../styles/AuthPagesWrapper.js";
 import Logo from "../common/Logo.js";
 import { FormWrapper } from "../styles/FormWrapper.js";
 import { Link, useNavigate } from "react-router-dom";
-import * as api from "../services/axios.js";
+import { login as apiLogin, getUser, getAllFollowed } from "../services/axios.js";
 import useGlobalContext from "../hooks/useGlobalContext.js";
 
 
@@ -13,7 +13,7 @@ const Login = () => {
     // Logic
     const navigate = useNavigate();
 
-    const { setUser } = useGlobalContext()
+    const { setUser, setFollows } = useGlobalContext()
 
     const [form, setForm] = useState(
         {
@@ -28,18 +28,25 @@ const Login = () => {
     
     const tryLogin = async click => {
         click.preventDefault();
+
         if(!buttonBlocked) {
             setButtonBlocked(true);
-            const result = await login();
+            await login();
         }
     }
 
     const login = async () => {
         try {
-            const signin = await api.login(form);
+            const signin = await apiLogin(form);
             localStorage.setItem("accessToken", signin.data.token);
             localStorage.setItem("refreshToken", signin.data.refreshToken);
-            setUser(signin.data.user)
+
+            const { data: { name, pictureUrl, id: userId }} = await getUser()
+            const { data: followed } = await getAllFollowed()
+
+            setFollows(followed)
+            setUser({ name, pictureUrl, userId })
+            
             navigate("/timeline");
         } catch (error) {
             setButtonBlocked(false);

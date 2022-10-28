@@ -4,7 +4,7 @@ const CommentBtn = ({ amount, ...otherProps}) => {
   return (
     <button className="btn-comment" {...otherProps}>
         <AiOutlineComment size={24}/>
-        <p>{amount} comments</p>
+        <p>{amount} comment{+amount !== 1 && 's'}</p>
     </button>
   )
 }

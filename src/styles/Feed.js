@@ -14,10 +14,6 @@ const Wrapper = styled.section`
         align-self: flex-start;
         margin-bottom: 1em;
     }
-
-    section:not(:last-of-type){
-        margin-bottom: 1rem;
-    }
 `
 
 export default Wrapper

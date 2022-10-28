@@ -31,7 +31,11 @@ const getUsers = async namePart => {
 };
 
 const getPosts = async () => {
-    return api.get('/timeline')
+    return api.get('/timeline',
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
 }
 
 const getLikes = async (postId) => {
@@ -68,6 +72,14 @@ const getPostsHashtag = async (hashtag) => {
 }
 const getPostsUserId = async (userId) => {
     return api.get(`/user/${userId}`)
+}
+
+const getAllFollowed = async () => {
+    return api.get(`/follows/all`,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
 }
 
 const followById = async (followedId) => {
@@ -112,6 +124,14 @@ const deletePost = async ({ id }) => {
     )
 }
 
+const deleteRepost = async ({ id }) => {
+    return api.delete(`/repost/${id}`,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
 const updatePost = async ({ id, body }) => {
     return api.patch(`/post/${id}`,
         { body },
@@ -138,6 +158,16 @@ const setComment = async ({ id, body }) => {
     )
 }
 
+const repostPost = async ({ id }) => {
+    return api.post(`/repost/${id}`,
+        {},
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
+
 export { 
     login, 
     signUp, 
@@ -158,5 +188,8 @@ export {
     followById,
     deleteFollow,
     getComments,
-    setComment
+    setComment,
+    repostPost,
+    deleteRepost,
+    getAllFollowed
 };
