@@ -89,8 +89,8 @@ const Post = ({ post, refresh }) => {
       </PostWrapper>
       <CommentsWrapper isRepost={post.isRepost}>
         {showComments && 
-            comments.map(({ id: commentId, pictureUrl, name, body }) => (
-              <div className="comment">
+            comments.map(({ id: commentId, pictureUrl, name, body }, index) => (
+              <div key={index} className="comment">
                 <img className="user-picture" src={pictureUrl} alt={name} />
                 <span>
                   <h4>{name} 
