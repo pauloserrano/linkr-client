@@ -7,8 +7,8 @@ const SearchResult = ({ user, index, isFollowed }) => {
     
     return (
             <div className="result" key={index} >
-                <img src={pictureUrl} />
-                <span spellcheck="false" >{name}</span>
+                <img src={pictureUrl} alt={name} />
+                <span spellcheck="false">{name}</span>
                 <FollowStatus>{ (isFollowed)?("• following"):("")}</FollowStatus>
             </div>
     )

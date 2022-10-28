@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import useInterval from 'use-interval'
+import InfiniteScroll from 'react-infinite-scroller';
+import LoadingSpinner from "../common/LoadingSpinner";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
 import { getPosts, setPost, getUser, getHashtagsRanking, getAllFollowed } from "../services/axios";
 import useForm from "../hooks/useForm";
@@ -15,6 +18,11 @@ const Timeline = () => {
   const [isDisabled, setIsDisabled] = useState(false)
   const [hashtagList, setHashtagList] = useState([])
   const [form, handleForm, setForm] = useForm({ link: "", body: "" })
+  const [newPosts, setNewPosts] = useState([])
+  const [hasMore, setHasMore] = useState(true)
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const POSTS_PER_PAGE = 2
   const navigate = useNavigate()
   
   useEffect(() => {
@@ -23,6 +31,17 @@ const Timeline = () => {
     console.log({follows})
     getUserData()
   }, [])
+
+  useInterval(() => {
+    setNewPosts([])
+    getPosts()
+    .then(({ data }) => setNewPosts(data))
+  }, 15000)
+
+  const renderNewPosts = () => {
+    setPosts([...newPosts, ...posts]);
+    setNewPosts([]);
+  }
 
   const getUserData = async () => {
     try {
@@ -72,6 +91,15 @@ const Timeline = () => {
     setIsDisabled(false)
   }
 
+const loadNextPage = () => {
+  setLoading(true);
+  setTimeout(() => {
+    setPage(page + 1);
+  setLoading(false);
+  }, 400)
+  
+}
+
   return (
     <>
         <Header />
@@ -107,15 +135,36 @@ const Timeline = () => {
                   <button type="submit">{ isDisabled ? "Publishing..." : "Publish" }</button>
                 </form>
               </NewPostWrapper>
-              <Feed.Status posts={posts} error={error} follows={follows} />
-              {posts?.length > 0 && posts.map((post) => (
-                <Feed.Post 
-                  key={`${post.id}${post.repostId}`} 
-                  post={post}
-                  userId={user.userId}
-                  refresh={updatePosts}
-                />
-              ))}
+                <div className="update-posts">
+                {
+                  ( newPosts?.length - posts?.length > 0 ) 
+                  ? <button onClick={renderNewPosts} > { newPosts.length - posts.length } new posts</button>
+                  : <></>  
+                }
+                </div>               
+              <InfiniteScroll
+                loadMore={loadNextPage}
+                hasMore={ page * POSTS_PER_PAGE < posts?.length }
+                loader={ (loading) ?
+                        <>
+                        <div className="space"></div>
+                        <div className="loader" key={0}>
+                          <LoadingSpinner />
+                          <span>Loading more posts...</span>
+                        </div>
+                        </>
+                        : <></> }
+              >
+                <Feed.Status follows={follows} posts={posts} error={error} />
+                {posts?.length > 0 && posts.slice(0, POSTS_PER_PAGE * page).map((post) => (
+                  <Feed.Post 
+                    key={`${post.id}${post.repostId}`} 
+                    post={post}
+                    userId={user.userId}
+                    refresh={updatePosts}
+                  />
+                ))}
+              </InfiniteScroll>
             </Feed>
             <HashtagTrending hashtagList={hashtagList}/>
         </TimelineWrapper>
