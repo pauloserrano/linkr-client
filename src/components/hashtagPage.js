@@ -6,18 +6,16 @@ import axios from 'axios';
 import Header from "../common/Header";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
 import Feed from "../common/Feed";
-import { getPostsHashtag } from "../services/axios";
+import { getPostsHashtag, getUser } from "../services/axios";
 import useGlobalContext from "../hooks/useGlobalContext";
-
-
-
 
 export default function HashtagPage(){
         
     const {hashtag} = useParams()
     const [posts, setPosts] = useState()
     const [error, setError] = useState(false)
-    const { follows } = useGlobalContext()
+    const { user, setUser, follows } = useGlobalContext()
+
 
     const updatePosts = () => {
         getPostsHashtag (hashtag)
@@ -26,13 +24,21 @@ export default function HashtagPage(){
           console.error(err)
           setError(true)
         })
+        getUserData()
     }
-    console.log(posts)
+
+    const getUserData = async () => {
+        try {
+          const { data: { name, pictureUrl, id: userId } } = await getUser()
+          setUser({ name, pictureUrl, userId })
+    
+        } catch (error) {
+          console.error(error)
+        }
+    }
     useEffect(() => updatePosts(), [])
 
     return(
-
-
         <>
             <Header />
             <TimelineWrapper>
