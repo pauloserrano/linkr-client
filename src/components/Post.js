@@ -12,7 +12,7 @@ import NewComment from "./NewComment"
 import RepostBtn from "./RepostBtn"
 import useGlobalContext from "../hooks/useGlobalContext"
 
-const Post = ({ post, userId, refresh }) => {
+const Post = ({ post, refresh }) => {
     const { id, pictureUrl, name, link, metaTitle, metaDescription, metaImage } = post
     const { user, follows } = useGlobalContext()
     const [isEditable, setIsEditable] = useState(false)
@@ -42,9 +42,9 @@ const Post = ({ post, userId, refresh }) => {
       {post.isRepost && <Post.RepostTag name={post.name === user.name ? 'you' : post.name} />}
       <PostWrapper isRepost={post.isRepost}>
           <aside>
-          <Link to={ "/user/" + post.userId } >
-            <img className="user-picture" src={pictureUrl} alt={name} />
-          </Link>
+            <Link to={ "/user/" + post.userId } >
+              <img className="user-picture" src={pictureUrl} alt={name} />
+            </Link>
             <LikeContainer postId={id}/>
             <CommentBtn 
               amount={comments.length}
@@ -70,7 +70,7 @@ const Post = ({ post, userId, refresh }) => {
               <p className="link">{link}</p>
               <img src={metaImage} alt={metaTitle} />
             </a>
-            {userId === post.userId && 
+            {user.userId === post.userId && 
               <div className="btn-container">
                 {!post.isRepost && 
                   <EditBtn 
@@ -97,7 +97,7 @@ const Post = ({ post, userId, refresh }) => {
                   <h4>{name} 
                     <span className="user-status">
                       {follows?.includes(commentId) && " • following"}
-                      {commentId === userId && " • post's author"} 
+                      {commentId === user.userId && " • post's author"} 
                     </span>
                   </h4>
                   <p>{body}</p>

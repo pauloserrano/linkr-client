@@ -11,7 +11,7 @@ import useGlobalContext from "../hooks/useGlobalContext";
 
 export default function UserPage(){
         
-    const {userId} = useParams()
+    const { userId } = useParams()
     const [user, setUser] = useState()
     const [currentUser, setCurrentUser] = useState()
     const [forceRefresh, setForceRefresh] = useState(false)
@@ -22,8 +22,6 @@ export default function UserPage(){
 
     const [awaitResponse, setAwaitResponse] = useState(false)
     const { follows } = useGlobalContext()
-
-    console.log(user)
 
     const updatePosts = () => {
         getPostsUserId (userId)
@@ -90,40 +88,36 @@ export default function UserPage(){
     useEffect(() => updatePosts(), [forceRefresh])
 
     return(
-
-
         <>
             <Header />
             <TimelineWrapper>
-
                 <Feed>
-
-                <UserPageTittle>
-                    <img src={user?.userPictureUrl}/><Feed.Title>{(user?.userName === undefined ? (""):(user?.userName + "'s posts"))}
-                    </Feed.Title>
-                </UserPageTittle>
+                    <UserPageTittle>
+                        <img src={user?.userPictureUrl} alt={user?.name}/>
+                        <Feed.Title>
+                            {(user?.userName === undefined ? (""):(user?.userName + "'s posts"))}
+                        </Feed.Title>
+                    </UserPageTittle>
                 
                 <Feed.Status follows={follows} posts={user?.postArray} error={error} />
-                {user?.postArray?.length > 0 && user?.postArray.map((post, index) => (
+                {user?.postArray?.length > 0 && user?.postArray.map((post) => (
                     <Feed.Post 
-                    key={index} 
-                    post={post} />
+                        key={`${post.id}${post.repostId}`} 
+                        post={post} 
+                        userId={userId}
+                    />
                 ))}
                 </Feed>
                 <RigthSideContainer>
-                    {(userId == currentUser?.userId) ? (<></>):(
-                        <Follow onClick={() => clicked()} wasFollow={follow} awaitResponse={awaitResponse}>{
-                            (follow) ? ("Unfollow"):("Follow")}
+                    {(userId !== currentUser?.userId) && (
+                        <Follow onClick={clicked} wasFollow={follow} awaitResponse={awaitResponse}>
+                            {follow ? "Unfollow" : "Follow" }
                         </Follow>
                     )}
                     <HashtagTrending hashtagList={hashtagList}/>
                 </RigthSideContainer>
-                
-
             </TimelineWrapper>
-            
         </>
-        
     )
 }
 

@@ -12,7 +12,7 @@ import HashtagTrending from "../common/hashtagsTrending";
 import { useNavigate } from "react-router-dom";
 
 const Timeline = () => {
-  const { user, setUser, follows, setFollows } = useGlobalContext()
+  const { user, follows } = useGlobalContext()
   const [posts, setPosts] = useState()
   const [error, setError] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
@@ -28,8 +28,8 @@ const Timeline = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) navigate('/')
-    console.log({follows})
-    getUserData()
+    
+    updatePosts()
   }, [])
 
   useInterval(() => {
@@ -41,21 +41,6 @@ const Timeline = () => {
   const renderNewPosts = () => {
     setPosts([...newPosts, ...posts]);
     setNewPosts([]);
-  }
-
-  const getUserData = async () => {
-    try {
-      const { data: { name, pictureUrl, id: userId } } = await getUser()
-      const { data: followed } = await getAllFollowed()
-      
-      setFollows(followed)
-      setUser({ name, pictureUrl, userId })
-      updatePosts()
-
-    } catch (error) {
-      setError(error)
-      console.error(error)
-    }
   }
 
   const updatePosts = async () => {
@@ -160,7 +145,6 @@ const loadNextPage = () => {
                   <Feed.Post 
                     key={`${post.id}${post.repostId}`} 
                     post={post}
-                    userId={user.userId}
                     refresh={updatePosts}
                   />
                 ))}
