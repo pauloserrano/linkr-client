@@ -103,7 +103,7 @@ export default function UserPage(){
                     </Feed.Title>
                 </UserPageTittle>
                 
-                <Feed.Status follows={follows} loading={user?.postArray} error={error} />
+                <Feed.Status follows={follows} posts={user?.postArray} error={error} />
                 {user?.postArray?.length > 0 && user?.postArray.map((post, index) => (
                     <Feed.Post 
                     key={index} 

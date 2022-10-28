@@ -39,7 +39,7 @@ export default function HashtagPage(){
 
                 <Feed>
                 <Feed.Title># {hashtag}</Feed.Title>
-                <Feed.Status follows={follows} loading={posts} error={error} />
+                <Feed.Status follows={follows} posts={posts} error={error} />
                 {posts?.length > 0 && posts.map((post, index) => (
                     <Feed.Post 
                     key={index} 

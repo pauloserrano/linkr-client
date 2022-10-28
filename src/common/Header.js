@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <Wrapper>
-        <h1>Linkr</h1>
+        <h1 onClick={() => navigate('/timeline')}>Linkr</h1>
         <SearchBar />
         <div className="user-container">
               <button onClick={() => setMenu(!menu)}>
