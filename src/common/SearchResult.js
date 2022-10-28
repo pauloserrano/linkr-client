@@ -5,7 +5,7 @@ const SearchResult = ({ user, index }) => {
     
     return (
             <div className="result" key={index} >
-                <img src={pictureUrl} />
+                <img src={pictureUrl} alt={user.username} />
                 <span spellcheck="false" >{username}</span>
             </div>
     )
