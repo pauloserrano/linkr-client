@@ -5,23 +5,25 @@ import { useParams } from 'react-router-dom';
 import Header from "../common/Header";
 import { TimelineWrapper } from "../styles";
 import Feed from "../common/Feed";
-import { getPostsUserId, getHashtagsRanking, insertFollow, getUser, followById, deleteFollow } from "../services/axios";
+import { getPostsUserId, getHashtagsRanking, insertFollow, getUser, followById, deleteFollow, getAllFollowed } from "../services/axios";
 import HashtagTrending from "../common/hashtagsTrending";
+import useGlobalContext from "../hooks/useGlobalContext"
+
 
 export default function UserPage(){
         
     const {userId} = useParams()
-    const [user, setUser] = useState()
+    const { user, setUser } = useGlobalContext()
     const [currentUser, setCurrentUser] = useState()
     const [forceRefresh, setForceRefresh] = useState(false)
+    const { follows, setFollows } = useGlobalContext()
+
 
     const [follow, setFollow] = useState(false)
     const [hashtagList, setHashtagList] = useState([])
     const [error, setError] = useState(false)
 
     const [awaitResponse, setAwaitResponse] = useState(false)
-
-    console.log(user)
 
     const updatePosts = () => {
         getPostsUserId (userId)
@@ -50,6 +52,16 @@ export default function UserPage(){
         .catch((err) => console.error(err))
     }
 
+    const getFollowsData = async () => {
+        try {
+          const { data: followed } = await getAllFollowed()
+          setFollows(followed)
+    
+        } catch (error) {
+          console.error(error)
+        }
+    }
+
     function clicked (){
 
         setAwaitResponse(true)
@@ -60,6 +72,8 @@ export default function UserPage(){
 
                 setFollow(!follow)   
                 setAwaitResponse(false) 
+                getFollowsData()
+
             })
             .catch(err => {
 
@@ -74,6 +88,7 @@ export default function UserPage(){
 
                 setFollow(!follow)
                 setAwaitResponse(false)
+                getFollowsData()
             })
             .catch(err => {
 

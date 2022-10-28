@@ -1,12 +1,19 @@
 import { Link } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 
-const SearchResult = ({ user, index, isFollowed }) => {
+const SearchResult = ({ user, index, isFollowed,  }) => {
     const { name, pictureUrl } = user;
+    const navigate = useNavigate()
+
+    function clicked(){
+        navigate("/user/"+user.id)
+        window.location.reload(false);
+    }
     
     return (
-            <div className="result" key={index} >
+            <div className="result" key={index} onClick={()=>clicked()}>
                 <img src={pictureUrl} />
                 <span spellcheck="false" >{name}</span>
                 <FollowStatus>{ (isFollowed)?("• following"):("")}</FollowStatus>

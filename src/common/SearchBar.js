@@ -4,28 +4,33 @@ import { Link } from "react-router-dom";
 import { DebounceInput } from "react-debounce-input";
 
 import SearchBarWrapper from "../styles/SearchBarWrapper.js";
-import { getUsers, getAllUsers } from "../services/axios";
+import { getUsers, getAllUsers, getAllFollowed } from "../services/axios";
 import SearchResult from "./SearchResult.js";
 
 import useGlobalContext from "../hooks/useGlobalContext"
-
 
 const SearchBar = () => {
     const [search, setSearch] = useState('');
     const [results, setResults] = useState([]);
     const [focused, setFocused] = useState(true);
 
-    const { follows } = useGlobalContext()
+    const { follows, setFollows } = useGlobalContext()
     const [allUsers, setAllUsers] = useState()
 
-    /*
-    const {follows} = useGlobalContext()
-    console.log("follows")
-    console.log(results)
-    */
+    const getFollowsData = async () => {
+        try {
+          const { data: followed } = await getAllFollowed()
+          setFollows(followed)
+    
+        } catch (error) {
+          console.error(error)
+        }
+    }
 
     useEffect(()=>{
 
+        getFollowsData()
+        
         getAllUsers()
         .then(res => {
             setAllUsers(res.data)
@@ -39,20 +44,40 @@ const SearchBar = () => {
 
         if (search !== "") {
 
-            setResults(allUsers?.filter( (e) => e.name.toLowerCase().includes(search.toLowerCase())))
+            setResults(teste(follows, allUsers?.filter( (e) => e.name.toLowerCase().includes(search.toLowerCase()))))
         }
 
     }, [search])
 
+    function teste(follows, arr){
+
+        let indiceFollowed
+        let aux
+
+        for (let i = 0; i < arr.length; i++){
+            indiceFollowed = i
+            for (let z = i + 1; z < arr.length; z++){
+                if (follows?.rows.filter( e => e?.followedId === arr[z].id).length !== 0 && indiceFollowed === i){
+                    indiceFollowed = z
+                }
+            }
+            aux = arr[i] 
+            arr[i] = arr[indiceFollowed]
+            arr[indiceFollowed] = aux
+        }
+        return arr
+    }
+
     function verifyFollow(id){
+  
         if(follows?.rows.filter( e => e?.followedId === id).length !== 0){
             return true
         } else return false
-    }
+    }  
 
     return (
     <>
-        <SearchBarWrapper onFocus={ () => setFocused(true) } /*onBlur={ () => setFocused(false) } */>
+        <SearchBarWrapper onFocus={ () => setFocused(true) } onBlur={ () => setTimeout(() => {setFocused(false)}, 200)  } >
 
             <DebounceInput 
                 minLength={3}
@@ -65,7 +90,7 @@ const SearchBar = () => {
             <div className="search-results" >
                 {
                     (results?.length > 0 && focused) 
-                    ? results.map((profile, i) => { return <Link to={ "/user/" + profile.id }><SearchResult key={i} user={profile} index={i} isFollowed={verifyFollow(profile.id)}/></Link> })
+                    ? results.map((profile, i) => { return <SearchResult key={i} user={profile} index={i} isFollowed={verifyFollow(profile.id)}/> })
                     : <></>
                 }
             </div>
