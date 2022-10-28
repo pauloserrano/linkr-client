@@ -28,7 +28,6 @@ const Post = ({ post, refresh }) => {
       try {
         const { data : comments } = await getComments({ id: post.id })
         setComments(comments)
-        console.log({comments})
 
       } catch (error) {
         console.error(error)

@@ -24,8 +24,8 @@ export default function HashtagTrending({hashtagList}){
                 {
                     (hashtagList.length >= 0) ? (
 
-                        hashtagList.map(e => { return(
-                            <p onClick={() => clicked(e)} key={e}># {e}</p>
+                        hashtagList.map((hashtag, index) => { return(
+                            <p onClick={() => clicked(hashtag)} key={index}># {hashtag}</p>
                         )})
 
                     ):(<p>carregando...</p>)
