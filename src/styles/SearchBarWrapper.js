@@ -37,7 +37,7 @@ const SearchBarWrapper = styled.div`
 
         position: absolute;
         top: 4.8vh;
-        background-color: #cfcfcf;
+        background-color: #E7E7E7;
         border-radius: 0 0 10px 10px;
         z-index: 1;
 
@@ -48,7 +48,7 @@ const SearchBarWrapper = styled.div`
             padding-left: 1rem;
             height: 6.8vh;
             
-            color: black;
+            color: #515151;
             font-size: 1rem;
 
             img {

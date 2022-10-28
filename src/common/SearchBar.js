@@ -45,7 +45,7 @@ const SearchBar = () => {
             <div className="search-results" >
                 {
                     (results?.length > 0 && focused) 
-                    ? results.map((profile, i) => { return <Link to={ "/user/" + profile.userId }><SearchResult key={i} user={profile} index={i} /></Link> })
+                    ? results.map((profile, i) => { return <Link to={ "/user/" + profile.userId }><SearchResult key={i} user={profile} index={i} isFollowed={profile?.isFollowed}/></Link> })
                     : <></>
                 }
             </div>
