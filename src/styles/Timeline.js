@@ -7,6 +7,7 @@ const Wrapper = styled.main`
 
     article{
         width: 100%;
+        margin-bottom: 0.5rem;
     }
 `
 

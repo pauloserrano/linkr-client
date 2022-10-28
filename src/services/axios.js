@@ -74,6 +74,14 @@ const getPostsUserId = async (userId) => {
     return api.get(`/user/${userId}`)
 }
 
+const getAllFollowed = async () => {
+    return api.get(`/follows/all`,
+        { headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }}
+    )
+}
+
 const followById = async (followedId) => {
     return api.get(`/follows/${followedId}`,
         { headers: {
@@ -182,5 +190,6 @@ export {
     getComments,
     setComment,
     repostPost,
-    deleteRepost
+    deleteRepost,
+    getAllFollowed
 };

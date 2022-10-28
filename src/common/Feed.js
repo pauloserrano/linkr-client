@@ -25,11 +25,12 @@ Feed.Post = ({ post, userId, handleDelete, ...otherProps }) => {
   )
 }
 
-Feed.Status = ({ loading, error }) => {
+Feed.Status = ({ posts, error, follows }) => {
   return (
     <>
-      {!loading && !error && 'Loading'}
-      {loading?.length === 0 && 'No posts found from your friends'}
+      {!follows && !posts && !error && 'Loading'}
+      {follows?.length === 0 && "You don't follow anyone yet. Search for new friends!"}
+      {follows?.length > 0 && posts?.length === 0 && 'No posts found from your friends'}
       {error && 'An error occured while trying to fetch the posts, please refresh the page'}
     </>
   )

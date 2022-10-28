@@ -4,9 +4,9 @@ import useGlobalContext from "../hooks/useGlobalContext"
 import useForm from "../hooks/useForm"
 import { setComment } from "../services/axios"
 
-const NewComment = ({ postId, refresh }) => {
+const NewComment = ({ postId, refresh, isRepost }) => {
     const [form, handleForm, setForm] = useForm({ body: "" })
-    const [isDisabled, setIsDisabled] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(isRepost ? true : false)
     const { user: { pictureUrl, name } } = useGlobalContext()
 
     const handleSubmit = async (e) => {
@@ -30,7 +30,11 @@ const NewComment = ({ postId, refresh }) => {
         <img className="user-picture" src={pictureUrl} alt={name} />
         <form onSubmit={handleSubmit}>
             {isDisabled
-                ? <input disabled type="text" value={form.body} placeholder="write a comment..." />
+                ? <input 
+                    disabled 
+                    type="text" 
+                    value={form.body} 
+                    placeholder={isRepost ? "comments are disabled for re-posts" :"write a comment..."} />
                 : <input 
                     type="text" 
                     placeholder="write a comment..." 
@@ -42,7 +46,6 @@ const NewComment = ({ postId, refresh }) => {
             <button className="btn-submit" type="submit">
                 <Send size={18} />
             </button>
-            
         </form>
     </div>
   )
