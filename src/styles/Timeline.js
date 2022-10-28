@@ -5,8 +5,12 @@ const Wrapper = styled.main`
     justify-content: center;
     margin: 0 auto;
 
+    article{
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
     .update-posts {
-        
         width: 100%;
         
         button {
@@ -46,9 +50,6 @@ const Wrapper = styled.main`
     }
     .space {
         height: 20vh;
-    article{
-        width: 100%;
-        margin-bottom: 0.5rem;
     }
 `
 

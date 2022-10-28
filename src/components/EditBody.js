@@ -54,7 +54,7 @@ const EditBody = ({ post, isEditable, setIsEditable }) => {
       for (let i = 0; i < textoArray.length; i++) {
         if(textoArray[i][0] === "#") indicesHashtag.push(i)   
       }
-      console.log(indicesHashtag)
+      
       for (let z = 0; z < textoArray.length; z++) {
         if (indicesHashtag.includes(z)){
           textoReferenciado += tokenSeparador + textoArray[z] + " "
@@ -77,10 +77,15 @@ const EditBody = ({ post, isEditable, setIsEditable }) => {
           </form>
         : <>
             {bodyFormated && 
-              <p>{bodyFormated.map(e => {
+              <p>{bodyFormated.map((e, index) => {
                 if (e.includes(tokenSeparador)){
-                  return <HashtagBoldStyle onClick={() =>navigate("/hashtag/"+e.replace(`${tokenSeparador}#`, ""))}>{e.replace(tokenSeparador, "") + " "}</HashtagBoldStyle>
-                } else return <span>{e + " "}</span>})}
+                  return (
+                    <HashtagBoldStyle key={index} onClick={() => navigate("/hashtag/"+e.replace(`${tokenSeparador}#`, ""))}>
+                      {e.replace(tokenSeparador, "") + " "}
+                    </HashtagBoldStyle>
+                  )
+
+                } else return <span key={index}>{e + " "}</span>})}
               </p>
             }
           </>
