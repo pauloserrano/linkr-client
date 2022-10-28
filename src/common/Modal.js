@@ -1,12 +1,10 @@
-import { useState } from "react";
 import ReactModal from "react-modal";
 import { ModalWrapper } from "../styles";
 import LoadingSpinner from "./LoadingSpinner";
 
 ReactModal.setAppElement('#root')
 
-const Modal = ({ state, setState, dialog, cancelBtn, confirmBtn, onSubmit }) => {
-    const [isLoading, setIsLoading] = useState(false)
+const Modal = ({ state, setState, dialog, cancelBtn, confirmBtn, onSubmit, isLoading, setIsLoading }) => {
     const handleClose = () => setState(false)
     //const handleOpen = () => setState(true)
 
@@ -44,7 +42,7 @@ const customStyles = {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'transparent',
-        zIndex: '11',
+        zIndex: '11'
     },
     overlay: {
         zIndex: '10'

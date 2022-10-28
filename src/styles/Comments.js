@@ -3,9 +3,9 @@ import styled from "styled-components";
 const Wrapper = styled.section`
     background-color: #1E1E1E;
     width: 100%;
-    padding: 1rem 1rem 1rem;
+    padding: 0.75rem 1rem 0rem;
     position: relative;
-    bottom: 2rem;
+    bottom: 0.75rem;
     border-radius: 0 0 1rem 1rem;
 
     .comment{
