@@ -46,6 +46,9 @@ const Wrapper = styled.main`
     }
     .space {
         height: 20vh;
+    article{
+        width: 100%;
+        margin-bottom: 0.5rem;
     }
 `
 

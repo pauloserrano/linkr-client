@@ -11,6 +11,7 @@ const Wrapper = styled.div`
     min-height: 250px;
     padding: 2rem;
     border-radius: 50px;
+    z-index: 10;
 
     h2{
         font-size: 2rem;

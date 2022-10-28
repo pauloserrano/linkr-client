@@ -3,15 +3,16 @@ import useInterval from 'use-interval'
 import InfiniteScroll from 'react-infinite-scroller';
 import LoadingSpinner from "../common/LoadingSpinner";
 import { TimelineWrapper, NewPostWrapper } from "../styles";
-import { getPosts, setPost, getUser, getHashtagsRanking } from "../services/axios";
+import { getPosts, setPost, getUser, getHashtagsRanking, getAllFollowed } from "../services/axios";
 import useForm from "../hooks/useForm";
 import Header from "../common/Header";
 import Feed from "../common/Feed";
 import useGlobalContext from "../hooks/useGlobalContext";
 import HashtagTrending from "../common/hashtagsTrending";
+import { useNavigate } from "react-router-dom";
 
 const Timeline = () => {
-  const { user, setUser } = useGlobalContext()
+  const { user, setUser, follows, setFollows } = useGlobalContext()
   const [posts, setPosts] = useState()
   const [error, setError] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
@@ -22,10 +23,13 @@ const Timeline = () => {
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const POSTS_PER_PAGE = 2
-
+  const navigate = useNavigate()
+  
   useEffect(() => {
-    updatePosts()
-    fillUser()
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) navigate('/')
+    console.log({follows})
+    getUserData()
   }, [])
 
   useInterval(() => {
@@ -39,43 +43,52 @@ const Timeline = () => {
     setNewPosts([]);
   }
 
-  const fillUser = () => {
-    getUser()
-    .then(({ data: { name, pictureUrl, id: userId} }) => setUser({ name, pictureUrl, userId }))
-    .catch(console.error) 
-  } 
+  const getUserData = async () => {
+    try {
+      const { data: { name, pictureUrl, id: userId } } = await getUser()
+      const { data: followed } = await getAllFollowed()
+      
+      setFollows(followed)
+      setUser({ name, pictureUrl, userId })
+      updatePosts()
 
-  const updatePosts = () => {
-    getHashtagsRanking()
-    .then(({ data }) => setHashtagList(data))
-    .catch(err => {
-      console.error(err)
-    })
+    } catch (error) {
+      setError(error)
+      console.error(error)
+    }
+  }
 
-    getPosts()
-    .then(({ data }) => setPosts(data))
-    .catch(err => {
-      console.error(err)
-      setError(true)
-    })
+  const updatePosts = async () => {
+    try {
+      const { data: hashtags } = await getHashtagsRanking()
+      const { data: posts } = await getPosts()
+
+      setHashtagList(hashtags)
+      setPosts(posts)
+      
+    } catch (error) {
+      setError(error)
+      console.error(error)
+    }
   }
 
   const resetForm = () => setForm({ link: "", body: "" })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    
     setIsDisabled(true)
-    setPost({ ...form })
-      .then(() => {
-        updatePosts()
-        resetForm()
-        setIsDisabled(false)
-      })
-      .catch(() => {
-        alert("Houve um erro ao publicar seu link")
-        setIsDisabled(false)
-      })
+
+    try {
+      await setPost({ ...form })
+      updatePosts()
+      resetForm()
+      
+    } catch (error) {
+      console.error(error)
+      alert("Houve um erro ao publicar seu link")
+    }
+
+    setIsDisabled(false)
   }
 
 const loadNextPage = () => {
@@ -142,10 +155,10 @@ const loadNextPage = () => {
                         </>
                         : <></> }
               >
-                <Feed.Status loading={posts} error={error} />
+                <Feed.Status follows={follows} posts={posts} error={error} />
                 {posts?.length > 0 && posts.slice(0, POSTS_PER_PAGE * page).map((post) => (
                   <Feed.Post 
-                    key={post.id} 
+                    key={`${post.id}${post.repostId}`} 
                     post={post}
                     userId={user.userId}
                     refresh={updatePosts}
